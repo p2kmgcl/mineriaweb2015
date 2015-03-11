@@ -9,7 +9,7 @@ import websphinx.Link;
 public class main {
     
     public static void main (String args[]) {
-        MainCrawler crawler = new MainCrawler();
+        //MainCrawler crawler = new MainCrawler();
         Boby boby = new Boby();
         try {
             String urls[] = {
@@ -33,9 +33,9 @@ public class main {
             };
             
             for (String url : urls) {
-                crawler.addRoot(new Link(new URL(url)));
+                //crawler.addRoot(new Link(new URL(url)));
             }
-            crawler.run();
+            //crawler.run();
             System.out.println("Fin :3");
             boby.clear_file(MainCrawler.OUTPUT_TEXT);
             

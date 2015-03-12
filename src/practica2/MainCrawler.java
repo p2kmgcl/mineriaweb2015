@@ -100,38 +100,27 @@ public class MainCrawler extends Crawler {
             //System.out.println("Added: " + extension);
         }
         
-        if (!isText) {
-            System.err.println(extension);
-        }
-        
         if (!fileName.endsWith("/") && isText) {
             // Add index.html to some files that are not real folders
             if (FilenameUtils.getExtension(fileName).equals("")) {
                 fileName += "/index.html";
             }
             
-            //System.out.println(url + " ~> " + fileName);
-            
             // Creates the file in the output folder
             try {
                 fileName = OUTPUT_DIR + fileName;
-                fileName = fileName.replace('?', '_');
-                fileName = fileName.replace('=', '_');
-                fileName = fileName.replace('&', '_');
-                fileName = fileName.replace('\'', '_');
-                fileName = fileName.replace('\\', '_');
-                fileName = fileName.replace(':', '_');
+                fileName = fileName.replaceAll("[^A-Za-z0-9áéíóúÁÉÍÓÚ\n\\/\\. ]", "");
+                System.out.println(fileName);
                 File file = new File(fileName);
                 FileUtils.writeByteArrayToFile(file, bytes);
             } catch (IOException ex) {
                 Logger.getLogger(MainCrawler.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("cambio: " + url + " ~> " + fileName);
             
             // Appends the text content to a secondary text file
             try {
                 File file = new File(OUTPUT_TEXT);
-                FileUtils.writeStringToFile(file, text + "\n", true);
+                FileUtils.writeStringToFile(file, fileName + text + "\n", true);
             } catch (IOException ex) {
                 Logger.getLogger(MainCrawler.class.getName()).log(Level.SEVERE, null, ex);
             }

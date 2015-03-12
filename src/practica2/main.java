@@ -9,12 +9,12 @@ import websphinx.Link;
 public class main {
     
     public static void main (String args[]) {
-        //MainCrawler crawler = new MainCrawler();
+        MainCrawler crawler = new MainCrawler();
         Boby boby = new Boby();
         try {
             String urls[] = {
                 "http://www.ccsu.edu/anthropology/",
-                "http://www.art.ccsu.edu/",
+                /*"http://www.art.ccsu.edu/",
                 "http://www.communication.ccsu.edu/",
                 "http://web.ccsu.edu/criminology/",
                 "http://www.design.ccsu.edu/",
@@ -30,12 +30,13 @@ public class main {
                 "http://web.ccsu.edu/psychology/",
                 "http://www.sociology.ccsu.edu/",
                 "http://www.theatre.ccsu.edu/" 
+                */
             };
             
             for (String url : urls) {
-                //crawler.addRoot(new Link(new URL(url)));
+                crawler.addRoot(new Link(new URL(url)));
             }
-            //crawler.run();
+            crawler.run();
             System.out.println("Fin :3");
             boby.clear_file(MainCrawler.OUTPUT_TEXT);
             

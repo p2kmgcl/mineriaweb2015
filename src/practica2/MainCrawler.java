@@ -75,6 +75,17 @@ public class MainCrawler extends Crawler {
         } catch (IOException ex) {
             Logger.getLogger(MainCrawler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // Create output arff
+        try {
+            File targetFile = new File(OUTPUT_TEXT + ".arff");
+            if (targetFile.exists()) {
+                FileUtils.forceDelete(targetFile);
+            }
+            FileUtils.writeStringToFile(targetFile, "");
+        } catch (IOException ex) {
+            Logger.getLogger(MainCrawler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -119,8 +130,11 @@ public class MainCrawler extends Crawler {
             
             // Appends the text content to a secondary text file
             try {
+                File fileArff = new File(OUTPUT_TEXT + ".arff");
                 File file = new File(OUTPUT_TEXT);
-                FileUtils.writeStringToFile(file, fileName + text + "\n", true);
+                FileUtils.writeStringToFile(file, text + "\n", true);
+                //System.out.println(fileName + ", \" " + text + " \"\n");
+                FileUtils.writeStringToFile(fileArff, fileName + ", \" " + text + " \"\n", true);
             } catch (IOException ex) {
                 Logger.getLogger(MainCrawler.class.getName()).log(Level.SEVERE, null, ex);
             }

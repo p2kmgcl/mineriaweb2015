@@ -14,7 +14,7 @@ public class main {
         try {
             String urls[] = {
                 "http://www.ccsu.edu/anthropology/",
-                /*"http://www.art.ccsu.edu/",
+                "http://www.art.ccsu.edu/",
                 "http://www.communication.ccsu.edu/",
                 "http://web.ccsu.edu/criminology/",
                 "http://www.design.ccsu.edu/",
@@ -29,8 +29,7 @@ public class main {
                 "http://www.polisci.ccsu.edu/",
                 "http://web.ccsu.edu/psychology/",
                 "http://www.sociology.ccsu.edu/",
-                "http://www.theatre.ccsu.edu/" 
-                */
+                "http://www.theatre.ccsu.edu/"
             };
             
             for (String url : urls) {

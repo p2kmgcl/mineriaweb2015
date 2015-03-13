@@ -82,7 +82,13 @@ public class Boby extends Crawler {
             if (targetFile.exists()) {
                 FileUtils.forceDelete(targetFile);
             }
-            FileUtils.writeStringToFile(targetFile, "");
+            
+            String header =  "@relation departments_string\n\n";
+                   header += "@attribute document_name string\n";
+                   header += "@attribute document_content string\n\n";
+                   header += "@data\n";
+                   
+            FileUtils.writeStringToFile(targetFile, header);
         } catch (IOException ex) {
             Logger.getLogger(Boby.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,11 +136,21 @@ public class Boby extends Crawler {
             
             // Appends the text content to a secondary text file
             try {
-                File fileArff = new File(OUTPUT_TEXT + ".arff");
                 File file = new File(OUTPUT_TEXT);
                 FileUtils.writeStringToFile(file, text + "\n", true);
-                //System.out.println(fileName + ", \" " + text + " \"\n");
-                FileUtils.writeStringToFile(fileArff, fileName + ", \" " + text + " \"\n", true);
+                
+                File fileArff = new File(OUTPUT_TEXT + ".arff");
+                fileName = fileName.replaceAll("[^A-Za-z0-9]", "_").toLowerCase();
+                text = text.replaceAll("[^A-Za-z0-9áéíóúÁÉÍÓÚ ]", "").toLowerCase();
+                String[] textArray = text.split(" ");
+                String result = "";
+                for (String word : textArray) {
+                    if (word.length() >= 3) {
+                        result += word + " ";
+                    }
+                }
+                
+                FileUtils.writeStringToFile(fileArff, fileName + ", \" " + result + " \"\n", true);
             } catch (IOException ex) {
                 Logger.getLogger(Boby.class.getName()).log(Level.SEVERE, null, ex);
             }

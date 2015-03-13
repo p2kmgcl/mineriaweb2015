@@ -9,8 +9,8 @@ import websphinx.Link;
 public class main {
     
     public static void main (String args[]) {
-        MainCrawler crawler = new MainCrawler();
         Boby boby = new Boby();
+        
         try {
             String urls[] = {
                 "http://www.ccsu.edu/anthropology/",
@@ -34,11 +34,10 @@ public class main {
             };
             
             for (String url : urls) {
-                crawler.addRoot(new Link(new URL(url)));
+                boby.addRoot(new Link(new URL(url)));
             }
-            crawler.run();
+            boby.run();
             System.out.println("Fin :3");
-            boby.clear_file(MainCrawler.OUTPUT_TEXT);
             
         } catch (IOException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);

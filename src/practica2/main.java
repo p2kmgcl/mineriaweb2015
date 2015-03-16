@@ -10,11 +10,12 @@ public class main {
     
     public static void main (String args[]) {
         Boby boby = new Boby();
+        Kiwi kiwi = new Kiwi();
         
         try {
             String urls[] = {
                 "http://www.ccsu.edu/anthropology/",
-                "http://www.art.ccsu.edu/",
+                /*"http://www.art.ccsu.edu/",
                 "http://www.communication.ccsu.edu/",
                 "http://web.ccsu.edu/criminology/",
                 "http://www.design.ccsu.edu/",
@@ -29,14 +30,14 @@ public class main {
                 "http://www.polisci.ccsu.edu/",
                 "http://web.ccsu.edu/psychology/",
                 "http://www.sociology.ccsu.edu/",
-                "http://www.theatre.ccsu.edu/"
+                "http://www.theatre.ccsu.edu/"*/
             };
             
             for (String url : urls) {
                 boby.addRoot(new Link(new URL(url)));
             }
             boby.run();
-            System.out.println("Fin :3");
+            kiwi.run(Boby.OUTPUT_TEXT);
             
         } catch (IOException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);

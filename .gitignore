@@ -2,6 +2,6 @@
 /build.xml
 /manifest.mf
 /build/
-/outputText
 /output
-/outputText.arff
+/outputText*
+/dist/

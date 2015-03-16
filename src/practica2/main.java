@@ -15,7 +15,7 @@ public class main {
         try {
             String urls[] = {
                 "http://www.ccsu.edu/anthropology/",
-                /*"http://www.art.ccsu.edu/",
+                "http://www.art.ccsu.edu/",
                 "http://www.communication.ccsu.edu/",
                 "http://web.ccsu.edu/criminology/",
                 "http://www.design.ccsu.edu/",
@@ -30,13 +30,20 @@ public class main {
                 "http://www.polisci.ccsu.edu/",
                 "http://web.ccsu.edu/psychology/",
                 "http://www.sociology.ccsu.edu/",
-                "http://www.theatre.ccsu.edu/"*/
+                "http://www.theatre.ccsu.edu/"
             };
             
             for (String url : urls) {
                 boby.addRoot(new Link(new URL(url)));
             }
-            boby.run();
+            
+            // Comentar estas 3 lineas para usar los ficheros locales
+            // sin descargar nada
+            //System.out.println("Lanzando arañas");
+            //boby.init(); // Borra los ficheros existentes
+            //boby.run(); // Empieza a descargar
+            
+            System.out.println("\nAnalizando resultados");
             kiwi.run(Boby.OUTPUT_TEXT);
             
         } catch (IOException ex) {

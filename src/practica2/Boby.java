@@ -21,7 +21,6 @@ public class Boby extends Crawler {
 
     public Boby() {
         super();
-        init();
         
         // Initiate array of extensions
         extensions = new ArrayList<>();
@@ -53,7 +52,7 @@ public class Boby extends Crawler {
     /**
      * Create output directory
      */
-    private void init () {
+    public void init () {
         // Create output folder
         try {
             File targetDirectory = new File(OUTPUT_DIR);
@@ -117,7 +116,7 @@ public class Boby extends Crawler {
             //System.out.println("Added: " + extension);
         }
         
-        if (!fileName.endsWith("/") && isText) {
+        if (!fileName.endsWith("/") && isText) {            
             // Add index.html to some files that are not real folders
             if (FilenameUtils.getExtension(fileName).equals("")) {
                 fileName += "/index.html";

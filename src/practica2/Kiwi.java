@@ -54,7 +54,7 @@ public class Kiwi {
             System.out.println("Aplicando filtro StringToWordVector TFIFD");
             stringToWordVector.setInputFormat(originalInstances);
             stringToWordVector.setIDFTransform(true);
-            instances = Filter.useFilter(originalInstances, numericToBinary);
+            instances = Filter.useFilter(originalInstances, stringToWordVector);
             
             // Guardamos los datos con los filtros aplicados
             System.out.println("Guardando fichero TFIFD");

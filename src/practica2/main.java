@@ -8,10 +8,7 @@ import websphinx.Link;
 
 public class main {
     
-    public static void main (String args[]) {
-        Boby boby = new Boby();
-        Kiwi kiwi = new Kiwi();
-        
+    public static void main (String args[]) {        
         try {
             String urls[] = {
                 "http://www.ccsu.edu/anthropology/",
@@ -33,6 +30,25 @@ public class main {
                 "http://www.theatre.ccsu.edu/"
             };
             
+            String urls2[] = {
+                "http://www.elmundotoday.com/2015/03/mujer-con-baja-autoestima-busca-desesperadamente-galerias-de-fotos-de-famosas-sin-maquillar/",
+                "http://www.elmundotoday.com/2015/03/exhibicionista-callejero-obligado-a-retirarse-porque-la-gente-va-por-la-calle-mirando-el-movil/",
+                "http://www.elmundotoday.com/2015/03/ahorcarse-en-la-oficina-primer-sintoma-de-estres-laboral/",
+                "http://www.elmundotoday.com/2015/03/arqueologos-de-television-espanola-expondran-los-restos-de-noche-de-fiesta/",
+                "http://www.elmundotoday.com/2015/03/cancelan-una-merienda-feminista-porque-no-pueden-abrir-el-bote-de-la-mermelada/",
+                "http://www.elmundotoday.com/2015/03/amancio-ortega-publicara-sus-memorias-en-las-etiquetas-de-las-camisetas-de-zara/",
+                "http://www.elmundotoday.com/2015/03/renfe-anadira-un-mas-o-menos-a-la-hora-de-llegada-de-sus-trenes/",
+                "http://www.elmundotoday.com/2015/03/un-estudio-confirma-que-el-divorcio-de-tus-padres-fue-culpa-tuya/",
+                "http://www.elmundotoday.com/2015/03/ikea-reconoce-que-todos-sus-muebles-los-ha-sacado-de-la-basura/",
+                "http://www.elmundotoday.com/2015/02/durex-pide-que-liberes-los-doce-condones-que-retienes-en-su-caja-desde-2006/",
+                "http://www.elmundotoday.com/2015/02/gordo-se-acaba-de-comer-un-bocadillo-y-ya-lo-echa-de-menos/",
+                "http://www.elmundotoday.com/2015/02/elogio-sincero-repetido-muchas-veces-acaba-convirtiendose-en-insulto/"
+            };
+
+            Boby boby = new Boby();
+            Kiwi kiwi = new Kiwi();
+            Sparky sparky = new Sparky(urls2);
+            
             for (String url : urls) {
                 boby.addRoot(new Link(new URL(url)));
             }
@@ -43,8 +59,12 @@ public class main {
             //boby.init(); // Borra los ficheros existentes
             //boby.run(); // Empieza a descargar
             
-            System.out.println("\nAnalizando resultados");
-            kiwi.run(Boby.OUTPUT_TEXT);
+            //System.out.println("\nAnalizando resultados");
+            //kiwi.run(Boby.OUTPUT_TEXT);
+            
+            System.out.println("Buscando adyacencias");
+            sparky.fillMatrix();
+            sparky.goodBoy();
             
         } catch (IOException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);

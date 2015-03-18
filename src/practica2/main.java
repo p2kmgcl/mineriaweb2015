@@ -49,7 +49,13 @@ public class main {
             Kiwi kiwi = new Kiwi();
             Sparky sparky = new Sparky(urls2);
             
+            // Añade las urls de los sitios dados
             for (String url : urls) {
+                boby.addRoot(new Link(new URL(url)));
+            }
+            
+            // Añade las urls personalizadas
+            for (String url : urls2) {
                 boby.addRoot(new Link(new URL(url)));
             }
             

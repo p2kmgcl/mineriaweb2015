@@ -54,23 +54,25 @@ public class main {
                 boby.addRoot(new Link(new URL(url)));
             }
             
-            // Añade las urls personalizadas
-            for (String url : urls2) {
-                boby.addRoot(new Link(new URL(url)));
-            }
+            // Añade las urls personalizadas (elegir entre
+            // las urls anteriores y éstas)
+            //for (String url : urls2) {
+            //    boby.addRoot(new Link(new URL(url)));
+            //}
             
             // Comentar estas 3 lineas para usar los ficheros locales
             // sin descargar nada
-            //System.out.println("Lanzando arañas");
-            //boby.init(); // Borra los ficheros existentes
-            //boby.run(); // Empieza a descargar
+            System.out.println("Lanzando arañas");
+            boby.init(); // Borra los ficheros existentes
+            boby.run(); // Empieza a descargar
             
             //System.out.println("\nAnalizando resultados");
-            //kiwi.run(Boby.OUTPUT_TEXT);
+            kiwi.run(Boby.OUTPUT_TEXT);
             
             System.out.println("Buscando adyacencias");
-            //sparky.fillMatrix();
-            sparky.fillCachedMatrix();
+            sparky.fillMatrix();
+            // Sólo usado para las pruebas
+            //sparky.fillCachedMatrix();
             System.out.println("Mostrando adyacencias");
             sparky.showAdjacence();
             System.out.println("Calculando ranking");

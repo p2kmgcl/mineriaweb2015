@@ -2,12 +2,15 @@ package practica2;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import websphinx.Crawler;
 import websphinx.DownloadParameters;
 import websphinx.Link;
 import websphinx.Page;
+import weka.core.matrix.EigenvalueDecomposition;
+import weka.core.matrix.Matrix;
 
 public class Sparky extends Crawler {
     private int currentUrlIndex;
@@ -93,5 +96,39 @@ public class Sparky extends Crawler {
         }
         
         System.out.println("\nArff!!");
+    }
+    
+    public void fillCachedMatrix () {
+        boolean _adjacenceMatrix[][] = {
+            {true, false, true, true, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false},
+            {true, false, true, true, false, false, false, false, false, false, false, false},
+            {true, false, true, true, false, false, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false},
+            {true, false, true, true, false, true, false, false, false, false, false, false},
+            {false, false, false, false, false, false, false, false, false, false, false, false},
+            {true, false, true, true, false, false, false, true, true, false, false, false},
+            {true, false, true, true, false, false, false, true, true, true, false, false},
+            {true, false, true, true, false, false, false, false, true, true, true, false},
+            {true, false, true, true, false, false, false, false, false, true, true, true},
+            {true, false, true, true, false, false, false, false, false, false, true, true}
+        };
+        this.adjacenceMatrix = _adjacenceMatrix;
+    }
+    
+    public void getRank() {
+        double[][] adjacenceDoubles = new double[this.urls.length][this.urls.length];
+        for (int i = 0; i < this.urls.length; i++) {
+            for (int j = 0; j < this.urls.length; j++) {
+                adjacenceDoubles[i][j] = this.adjacenceMatrix[i][j] ? 1.0 : 0.0;
+            }
+        }
+        
+        Matrix matrix = new Matrix(adjacenceDoubles);
+        EigenvalueDecomposition eigenvalueDecomposition = new EigenvalueDecomposition(matrix);
+        System.out.println(eigenvalueDecomposition.getD());
+        System.out.println(eigenvalueDecomposition.getV());
+        System.out.println(Arrays.toString(eigenvalueDecomposition.getRealEigenvalues()));
+        System.out.println(Arrays.toString(eigenvalueDecomposition.getImagEigenvalues()));
     }
 }

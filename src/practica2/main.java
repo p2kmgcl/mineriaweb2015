@@ -69,7 +69,10 @@ public class main {
             //kiwi.run(Boby.OUTPUT_TEXT);
             
             System.out.println("Buscando adyacencias");
-            sparky.fillMatrix();
+            //sparky.fillMatrix();
+            sparky.fillCachedMatrix();
+            System.out.println("Calculando ranking");
+            sparky.getRank();
             sparky.goodBoy();
             
         } catch (IOException ex) {

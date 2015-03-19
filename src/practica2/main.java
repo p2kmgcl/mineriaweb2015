@@ -71,9 +71,10 @@ public class main {
             System.out.println("Buscando adyacencias");
             //sparky.fillMatrix();
             sparky.fillCachedMatrix();
+            System.out.println("Mostrando adyacencias");
+            sparky.showAdjacence();
             System.out.println("Calculando ranking");
             sparky.getRank();
-            sparky.goodBoy();
             
         } catch (IOException ex) {
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);

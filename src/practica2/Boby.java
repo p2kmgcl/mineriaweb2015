@@ -39,6 +39,12 @@ public class Boby extends Crawler {
         this.setMaxDepth(1);
     }
 
+    /**
+     * Este método es un contenedor del método doVisit que evita que el proceso
+     * termine antes de analizar cada página.
+     * Se invoca automáticamente desde fillMatrix.
+     * @param page 
+     */
     @Override
     public void visit(Page page) {
         this.doVisit(page);
@@ -50,7 +56,10 @@ public class Boby extends Crawler {
     }
     
     /**
-     * Create output directory
+     * Inicializa la estructura de ficheros de cache borrando todos los existentes
+     * y preparando los ficheros que serán rellenados por el crawler.
+     * Si no se invoca antes de llamar al método run() los resultados serán
+     * incorporados a los ficheros ya existentes.
      */
     public void init () {
         // Create output folder
@@ -94,7 +103,8 @@ public class Boby extends Crawler {
     }
 
     /**
-     * Use me please
+     * Este método se ejecuta para cada página encontrada por el crawler.
+     * Se invoca automáticamente desde doVisit.
      * @param page Page to visit
      */
     private void doVisit (Page page) {

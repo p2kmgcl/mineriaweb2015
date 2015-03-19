@@ -44,6 +44,9 @@ public class Sparky extends Crawler {
         this.setMaxDepth(1);
     }
     
+    /**
+     * Ejecuta el crawler para cada página rellenando la matriz de adyacencias.
+     */
     public void fillMatrix () {
         for (int i = 0; i < this.urls.length; i++) {
             try {
@@ -60,6 +63,12 @@ public class Sparky extends Crawler {
         this.run();
     }
     
+    /**
+     * Este método es un contenedor del método doVisit que evita que el proceso
+     * termine antes de analizar cada página.
+     * Se invoca automáticamente desde fillMatrix.
+     * @param page 
+     */
     @Override
     public void visit(Page page) {
         this.doVisit(page);
@@ -70,6 +79,11 @@ public class Sparky extends Crawler {
         }
     }
     
+    /**
+     * Este método se ejecuta para cada página encontrada por el crawler.
+     * Se invoca automáticamente desde doVisit.
+     * @param page 
+     */
     private void doVisit (Page page) {
         String origin = this.currentUrl;
         String current = page.getBase().toString();
@@ -85,7 +99,10 @@ public class Sparky extends Crawler {
         
     }
 
-    public void goodBoy () {
+    /**
+     * Muestra la matriz de adyacencia.
+     */
+    public void showAdjacence () {
         System.out.println("");
         for (int i = 0; i < this.adjacenceMatrix.length; i++) {
             for (int j = 0; j < this.adjacenceMatrix[i].length; j++) {
@@ -94,10 +111,13 @@ public class Sparky extends Crawler {
             }
             System.out.println("");
         }
-        
-        System.out.println("\nArff!!");
     }
     
+    /**
+     * Rellena la matriz de vuelta por las urls del fichero main.java sin usar
+     * el crawler para explorar las páginas reales. Este método se usa para un
+     * desarrollo más rápido.
+     */
     public void fillCachedMatrix () {
         boolean _adjacenceMatrix[][] = {
             {true, false, true, true, false, false, false, false, false, false, false, false},
@@ -116,6 +136,10 @@ public class Sparky extends Crawler {
         this.adjacenceMatrix = _adjacenceMatrix;
     }
     
+    /**
+     * Ejercicio 2.2
+     * Cálculo del ranking de páginas
+     */
     public void getRank() {
         double[][] adjacenceDoubles = new double[this.urls.length][this.urls.length];
         for (int i = 0; i < this.urls.length; i++) {

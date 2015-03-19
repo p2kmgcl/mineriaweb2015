@@ -30,7 +30,6 @@ public class Sparky extends Crawler {
             for (int j = 0; j < urls.length; j++) {
                 this.adjacenceMatrix[i][j] = false;
             }
-            page_rank[i] = 1.0;
         }
         
         // User agent, robots.txt...
@@ -153,6 +152,7 @@ public class Sparky extends Crawler {
                 if(adjacenceMatrix[i][j] == true)
                     link_out[i] = ++link_out[i];
             }
+            page_rank[i] = 1.0;
         }
         Matrix matrix = new Matrix(adjacenceDoubles);
         

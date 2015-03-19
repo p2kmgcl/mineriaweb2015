@@ -17,17 +17,20 @@ public class Sparky extends Crawler {
     private String currentUrl;
     private final String[] urls;
     private boolean[][] adjacenceMatrix;
+    private double[] page_rank;
 
     public Sparky(String[] urls) {
         super();
         
         // Adjacence
         this.urls = urls;
+        this.page_rank = new double[urls.length];
         this.adjacenceMatrix = new boolean[urls.length][urls.length];
         for (int i = 0; i < urls.length; i++) {
             for (int j = 0; j < urls.length; j++) {
                 this.adjacenceMatrix[i][j] = false;
             }
+            page_rank[i] = 1.0;
         }
         
         // User agent, robots.txt...
@@ -142,17 +145,41 @@ public class Sparky extends Crawler {
      */
     public void getRank() {
         double[][] adjacenceDoubles = new double[this.urls.length][this.urls.length];
+        Integer[] link_out = new Integer[this.urls.length];
         for (int i = 0; i < this.urls.length; i++) {
+            link_out[i] = 0;
             for (int j = 0; j < this.urls.length; j++) {
-                adjacenceDoubles[i][j] = this.adjacenceMatrix[i][j] ? 1.0 : 0.0;
+                adjacenceDoubles[j][i] = this.adjacenceMatrix[i][j] ? 1.0 : 0.0;
+                if(adjacenceMatrix[i][j] == true)
+                    link_out[i] = ++link_out[i];
             }
         }
-        
         Matrix matrix = new Matrix(adjacenceDoubles);
+        
+        /*
         EigenvalueDecomposition eigenvalueDecomposition = new EigenvalueDecomposition(matrix);
         System.out.println(eigenvalueDecomposition.getD());
         System.out.println(eigenvalueDecomposition.getV());
         System.out.println(Arrays.toString(eigenvalueDecomposition.getRealEigenvalues()));
         System.out.println(Arrays.toString(eigenvalueDecomposition.getImagEigenvalues()));
+        */
+        double normalize, suma, d = 0.5;
+        for(int iteration = 0; iteration < 100; ++iteration){
+            for(int i = 0; i < urls.length; ++i){
+                suma = 0;
+                normalize = 0;
+                for(int j = 0; j < urls.length; ++j){
+                    if(adjacenceDoubles[i][j] == 1.0)
+                        suma = suma + (this.page_rank[j]/link_out[j]);
+                    normalize = normalize + Math.pow(this.page_rank[j], 2);
+                }
+                normalize = Math.sqrt(normalize);
+                this.page_rank[i] = ((1 - d) + d * suma)/normalize;
+            }
+        }
+        System.out.println("el page rank es: ");
+        for(int i = 0; i < this.urls.length; ++i){
+            System.out.println("El valor de la page " + i + " es: " + this.page_rank[i]);
+        }
     }
 }

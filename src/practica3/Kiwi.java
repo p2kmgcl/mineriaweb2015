@@ -9,7 +9,6 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.NumericToBinary;
-import weka.filters.unsupervised.attribute.StringToNominal;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 import weka.clusterers.SimpleKMeans;
 
@@ -21,18 +20,23 @@ public class Kiwi {
             Instances originalInstances = source.getDataSet();
             Instances instances;
             SimpleKMeans kmeans = new SimpleKMeans();
-            int[] assignments = null;            
-            
-            // Aplicamos el filtro StringToNominal a los nombres de los documentos
-            System.out.println("Aplicando filtro StringToNominal");
-            StringToNominal stringToNominal = new StringToNominal();
-            stringToNominal.setAttributeRange("first");
-            stringToNominal.setInputFormat(originalInstances);
-            instances = Filter.useFilter(originalInstances, stringToNominal);
-            
-            // Aplicamos el filtro StringToWordVector al contenido separando palabras
-            System.out.println("Aplicando filtro StringToWordVector");
+            int[] assignments = null;
             StringToWordVector stringToWordVector = new StringToWordVector(1000);
+            
+            // Aplicamos le filtro NumericToBinary
+            System.out.println("Aplicando filtro NumericToBinary");
+            NumericToBinary numericToBinary = new NumericToBinary();
+            numericToBinary.setInputFormat(originalInstances);
+            numericToBinary.setIgnoreClass(true);
+            instances = Filter.useFilter(originalInstances, numericToBinary);
+            
+            // Guardamos los datos con los filtros aplicados
+            System.out.println("Guardando fichero binario");
+            File binaryFile = new File(fileName + "_binary.arff");
+            FileUtils.writeStringToFile(binaryFile, instances.toString());
+            
+             // Aplicamos el filtro StringToWordVector al contenido separando palabras
+            System.out.println("Aplicando filtro StringToWordVector");
             stringToWordVector.setInputFormat(instances);
             stringToWordVector.setOutputWordCounts(true);
             instances = Filter.useFilter(instances, stringToWordVector);
@@ -41,18 +45,6 @@ public class Kiwi {
             System.out.println("Guardando fichero filtrado");
             File filteredFile = new File(fileName + "_filtered.arff");
             FileUtils.writeStringToFile(filteredFile, instances.toString());
-            
-            // Aplicamos le filtro NumericToBinary
-            System.out.println("Aplicando filtro NumericToBinary");
-            NumericToBinary numericToBinary = new NumericToBinary();
-            numericToBinary.setInputFormat(instances);
-            numericToBinary.setIgnoreClass(true);
-            instances = Filter.useFilter(instances, numericToBinary);
-            
-            // Guardamos los datos con los filtros aplicados
-            System.out.println("Guardando fichero binario");
-            File binaryFile = new File(fileName + "_binary.arff");
-            FileUtils.writeStringToFile(binaryFile, instances.toString());
             
             // Aplicamos el filtro StringToWordVector al conjunto original
             System.out.println("Aplicando filtro StringToWordVector TFIFD");

@@ -2,14 +2,14 @@
 % Department data in string format
 %------------------------------------------------------------------------------
 % Data Mining the Web: Uncovering Patterns in Web Content, Structure, and Usage
-% Copyright © by Zdravko Markov, Ph.D., and Daniel T. Larose, Ph.D.
+% Copyright Â© by Zdravko Markov, Ph.D., and Daniel T. Larose, Ph.D.
 %------------------------------------------------------------------------------
 
 @relation departments_string
 
 @attribute document_name string
 @attribute document_content string
-@attribute document_class
+@attribute document_class string
 
 @data
 

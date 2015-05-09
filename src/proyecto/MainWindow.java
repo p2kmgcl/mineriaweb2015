@@ -10,24 +10,28 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import websphinx.Link;
+import java.awt.Dialog;
+import java.util.ArrayList;
 
 /**
  *
  * @author vagrant
  */
 abstract public class MainWindow extends javax.swing.JFrame {
-    
+
     abstract public void resetCrawler();
     abstract public void runCrawler();
     abstract public void stopCrawler();
     abstract public Crawly getCrawler();
-    
+
+    private ArrayList<Restriccion> restricciones;
+
     /**
      * Creates new form MainWindow
      */
     public MainWindow() {
         initComponents();
-        this.buttonToggleCrawler.setText("Pausar");
+        restricciones = new ArrayList<Restriccion>();
     }
 
     /**
@@ -44,6 +48,17 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jTextAreaRun = new javax.swing.JTextArea();
         buttonStopCrawler = new javax.swing.JButton();
         buttonToggleCrawler = new javax.swing.JButton();
+        jDialog_restriccion = new javax.swing.JDialog();
+        jToggleButton_restriccion_enlace = new javax.swing.JToggleButton();
+        jToggleButton_restriccion_pagina = new javax.swing.JToggleButton();
+        jLabel_restriccion_cumplirse = new javax.swing.JLabel();
+        jComboBox_restriccion_cumplir = new javax.swing.JComboBox();
+        jLabel_restriccion_elemento = new javax.swing.JLabel();
+        jComboBox_restriccion_elemento = new javax.swing.JComboBox();
+        jLabel_restriccion_valor = new javax.swing.JLabel();
+        jTextField_restriccion_valor = new javax.swing.JTextField();
+        jButton_restriccion_aceptar = new javax.swing.JButton();
+        jButton_restriccion_cancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
@@ -55,7 +70,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_tabla_restricciones = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         checkboxSaveInFolder = new javax.swing.JCheckBox();
@@ -128,6 +143,120 @@ abstract public class MainWindow extends javax.swing.JFrame {
                     .addComponent(buttonStopCrawler)
                     .addComponent(buttonToggleCrawler))
                 .addContainerGap())
+        jDialog_restriccion.setMinimumSize(new java.awt.Dimension(500, 243));
+        jDialog_restriccion.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        jDialog_restriccion.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog_restriccion.setPreferredSize(new java.awt.Dimension(500, 243));
+        jDialog_restriccion.setResizable(false);
+
+        jToggleButton_restriccion_enlace.setSelected(true);
+        jToggleButton_restriccion_enlace.setText("Enlace");
+        jToggleButton_restriccion_enlace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_restriccion_enlaceActionPerformed(evt);
+            }
+        });
+
+        jToggleButton_restriccion_pagina.setText("Pagina");
+        jToggleButton_restriccion_pagina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton_restriccion_paginaActionPerformed(evt);
+            }
+        });
+
+        jLabel_restriccion_cumplirse.setText("Debe cumplirse:");
+
+        jComboBox_restriccion_cumplir.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Si", "No" }));
+        jComboBox_restriccion_cumplir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_restriccion_cumplirActionPerformed(evt);
+            }
+        });
+
+        jLabel_restriccion_elemento.setText("Elemento:");
+
+        jComboBox_restriccion_elemento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Titulo", "Etiqueta", "Contenido" }));
+        jComboBox_restriccion_elemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_restriccion_elementoActionPerformed(evt);
+            }
+        });
+
+        jLabel_restriccion_valor.setText("Valor:");
+
+        jTextField_restriccion_valor.setText("Introducir expresion regular");
+        jTextField_restriccion_valor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField_restriccion_valorMouseClicked(evt);
+            }
+        });
+
+        jButton_restriccion_aceptar.setText("Aceptar");
+        jButton_restriccion_aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_restriccion_aceptarActionPerformed(evt);
+            }
+        });
+
+        jButton_restriccion_cancelar.setText("Cancelar");
+        jButton_restriccion_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_restriccion_cancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog_restriccionLayout = new javax.swing.GroupLayout(jDialog_restriccion.getContentPane());
+        jDialog_restriccion.getContentPane().setLayout(jDialog_restriccionLayout);
+        jDialog_restriccionLayout.setHorizontalGroup(
+            jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_restriccionLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog_restriccionLayout.createSequentialGroup()
+                        .addComponent(jLabel_restriccion_cumplirse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(49, 49, 49))
+                    .addGroup(jDialog_restriccionLayout.createSequentialGroup()
+                        .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel_restriccion_elemento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel_restriccion_valor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(82, 98, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_restriccionLayout.createSequentialGroup()
+                        .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton_restriccion_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jToggleButton_restriccion_enlace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)))
+                .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jToggleButton_restriccion_pagina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox_restriccion_cumplir, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox_restriccion_elemento, javax.swing.GroupLayout.Alignment.LEADING, 0, 232, Short.MAX_VALUE)
+                    .addComponent(jTextField_restriccion_valor, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton_restriccion_aceptar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jDialog_restriccionLayout.setVerticalGroup(
+            jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_restriccionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jToggleButton_restriccion_enlace)
+                    .addComponent(jToggleButton_restriccion_pagina))
+                .addGap(18, 18, 18)
+                .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_restriccion_cumplirse, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox_restriccion_cumplir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_restriccion_elemento, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox_restriccion_elemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_restriccion_valor, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_restriccion_valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGroup(jDialog_restriccionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_restriccion_cancelar)
+                    .addComponent(jButton_restriccion_aceptar))
+                .addGap(24, 24, 24))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -138,6 +267,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setToolTipText("");
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel1.setText("Alcance:");
@@ -159,7 +289,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hiperenlaces", "Imágenes", "Todos" }));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_tabla_restricciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -182,10 +312,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-        }
+        jScrollPane2.setViewportView(jTable_tabla_restricciones);
+        jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
 
         jButton1.setText("Añadir restricción");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -374,6 +502,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        jDialog_restriccion.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -422,7 +551,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
         }
         
         this.runCrawler();
-        
+
+        this.buttonToggleCrawler.setText("Pausar");
         this.JDialog_Run.setLocationRelativeTo(this);
         this.JDialog_Run.setModal(true);
         this.JDialog_Run.setVisible(true);
@@ -470,6 +600,80 @@ abstract public class MainWindow extends javax.swing.JFrame {
         System.out.println(line);
         this.jTextAreaRun.setText(
             this.jTextAreaRun.getText() + line + '\n');
+
+    private void jComboBox_restriccion_cumplirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_restriccion_cumplirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_restriccion_cumplirActionPerformed
+
+    private void jComboBox_restriccion_elementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_restriccion_elementoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_restriccion_elementoActionPerformed
+
+    private void jToggleButton_restriccion_enlaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_restriccion_enlaceActionPerformed
+        // TODO add your handling code here:
+        jToggleButton_restriccion_enlace.setSelected(true);
+        if(jToggleButton_restriccion_pagina.isSelected() == true){
+            jToggleButton_restriccion_pagina.setSelected(false);
+        }
+    }//GEN-LAST:event_jToggleButton_restriccion_enlaceActionPerformed
+
+    private void jToggleButton_restriccion_paginaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_restriccion_paginaActionPerformed
+        // TODO add your handling code here:
+        jToggleButton_restriccion_pagina.setSelected(true);
+        if(jToggleButton_restriccion_enlace.isSelected() == true){
+            jToggleButton_restriccion_enlace.setSelected(false);
+        }
+    }//GEN-LAST:event_jToggleButton_restriccion_paginaActionPerformed
+
+    private void jTextField_restriccion_valorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_restriccion_valorMouseClicked
+        // TODO add your handling code here:
+        if(jTextField_restriccion_valor.getText().equals("Introducir expresion regular"))
+            jTextField_restriccion_valor.setText("");
+    }//GEN-LAST:event_jTextField_restriccion_valorMouseClicked
+
+    private void jButton_restriccion_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restriccion_cancelarActionPerformed
+        // TODO add your handling code here:
+        jTextField_restriccion_valor.setText("Introducir expresion regular");
+        jDialog_restriccion.setVisible(false);
+    }//GEN-LAST:event_jButton_restriccion_cancelarActionPerformed
+
+    private void jButton_restriccion_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restriccion_aceptarActionPerformed
+        // TODO add your handling code here:
+        if(jToggleButton_restriccion_enlace.isSelected() == true){
+            switch((String) jComboBox_restriccion_cumplir.getSelectedItem()){
+                case "Si":
+                    restricciones.add(new Restriccion("Enlace", true,(String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    break;
+                case "No":
+                    restricciones.add(new Restriccion("Enlace", false, (String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    break;
+            }
+        } else{
+            switch((String) jComboBox_restriccion_cumplir.getSelectedItem()){
+                case "Si":
+                    restricciones.add(new Restriccion("Pagina", true,(String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    break;
+                case "No":
+                    restricciones.add(new Restriccion("Pagina", false, (String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    break;
+            }
+        }
+        
+        jTextField_restriccion_valor.setText("Introducir expresion regular");
+        jDialog_restriccion.setVisible(false);
+    }//GEN-LAST:event_jButton_restriccion_aceptarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new MainWindow().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -484,15 +688,24 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkboxGenerateMatrix;
     private javax.swing.JCheckBox checkboxSaveInFolder;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton_restriccion_aceptar;
+    private javax.swing.JButton jButton_restriccion_cancelar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JComboBox jComboBox_restriccion_cumplir;
+    private javax.swing.JComboBox jComboBox_restriccion_elemento;
+    private javax.swing.JDialog jDialog_restriccion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel_restriccion_cumplirse;
+    private javax.swing.JLabel jLabel_restriccion_elemento;
+    private javax.swing.JLabel jLabel_restriccion_valor;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -505,8 +718,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_tabla_restricciones;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextAreaRun;
+    private javax.swing.JTextField jTextField_restriccion_valor;
+    private javax.swing.JToggleButton jToggleButton_restriccion_enlace;
+    private javax.swing.JToggleButton jToggleButton_restriccion_pagina;
     // End of variables declaration//GEN-END:variables
 }

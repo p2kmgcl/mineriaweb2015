@@ -1,0 +1,51 @@
+package proyecto;
+
+public class main {
+    static private MainWindow mainWindow;
+    static private Crawly crawly;
+    static private Thread crawlyThread;
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        
+        main.mainWindow = new MainWindow() {
+            @Override public void runCrawler() {
+                if (main.crawlyThread != null) {
+                    main.crawlyThread.interrupt();
+                    main.crawlyThread = null;
+                }
+                main.crawlyThread = new Thread(main.crawly);
+                main.crawlyThread.start();
+            }
+
+            @Override public void stopCrawler() {
+                if (main.crawly != null) {
+                    main.crawly.stop();
+                }
+                
+                if (main.crawlyThread != null) {
+                    main.crawlyThread.interrupt();
+                    main.crawlyThread = null;
+                }
+            }
+
+            @Override public Crawly getCrawler() {
+                return main.crawly;
+            }
+
+            @Override
+            public void resetCrawler() {
+                stopCrawler();
+                main.crawly = new Crawly() {
+                    @Override public void log(String log) { main.mainWindow.log(log); }
+                    @Override public void clearLog() { main.mainWindow.clearLog(); }
+                };
+            }
+        };
+        
+        main.mainWindow.resetCrawler();
+        main.mainWindow.setVisible(true);
+    }
+}

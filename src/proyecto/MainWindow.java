@@ -41,12 +41,12 @@ public class MainWindow extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        checkboxSaveInFolder = new javax.swing.JCheckBox();
+        checkboxGenerateMatrix = new javax.swing.JCheckBox();
+        checkboxConcatenateResults = new javax.swing.JCheckBox();
+        buttonGenerateMatrix = new javax.swing.JButton();
+        buttonSaveInFolder = new javax.swing.JButton();
+        buttonConcatenateResults = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -129,27 +129,40 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox2.setText("Guardar en carpeta");
-
-        jCheckBox3.setText("Generar matriz de adyacencia");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+        checkboxSaveInFolder.setText("Guardar en carpeta");
+        checkboxSaveInFolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
+                checkboxSaveInFolderActionPerformed(evt);
             }
         });
 
-        jCheckBox4.setText("Concatenar resultados");
-
-        jButton2.setText("Examinar...");
-
-        jButton3.setText("Examinar...");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        checkboxGenerateMatrix.setText("Generar matriz de adyacencia");
+        checkboxGenerateMatrix.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                checkboxGenerateMatrixActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Examinar...");
+        checkboxConcatenateResults.setText("Concatenar resultados");
+        checkboxConcatenateResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkboxConcatenateResultsActionPerformed(evt);
+            }
+        });
+
+        buttonGenerateMatrix.setText("Examinar...");
+        buttonGenerateMatrix.setEnabled(false);
+
+        buttonSaveInFolder.setText("Examinar...");
+        buttonSaveInFolder.setEnabled(false);
+        buttonSaveInFolder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveInFolderActionPerformed(evt);
+            }
+        });
+
+        buttonConcatenateResults.setText("Examinar...");
+        buttonConcatenateResults.setEnabled(false);
 
         jButton5.setText("Iniciar rastreo");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -222,17 +235,17 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox2))
+                            .addComponent(checkboxGenerateMatrix)
+                            .addComponent(checkboxSaveInFolder))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(buttonGenerateMatrix, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonSaveInFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jCheckBox4)
+                            .addComponent(checkboxConcatenateResults)
                             .addGap(68, 68, 68)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(buttonConcatenateResults, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,16 +283,16 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jCheckBox1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jButton3))
+                    .addComponent(checkboxSaveInFolder)
+                    .addComponent(buttonSaveInFolder))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jButton2))
+                    .addComponent(checkboxGenerateMatrix)
+                    .addComponent(buttonGenerateMatrix))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jButton4))
+                    .addComponent(checkboxConcatenateResults)
+                    .addComponent(buttonConcatenateResults))
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                 .addContainerGap())
@@ -296,13 +309,13 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
+    private void checkboxGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxGenerateMatrixActionPerformed
+        this.buttonGenerateMatrix.setEnabled(this.checkboxGenerateMatrix.isSelected());
+    }//GEN-LAST:event_checkboxGenerateMatrixActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void buttonSaveInFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveInFolderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_buttonSaveInFolderActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -315,6 +328,14 @@ public class MainWindow extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void checkboxSaveInFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxSaveInFolderActionPerformed
+        this.buttonSaveInFolder.setEnabled(this.checkboxSaveInFolder.isSelected());
+    }//GEN-LAST:event_checkboxSaveInFolderActionPerformed
+
+    private void checkboxConcatenateResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxConcatenateResultsActionPerformed
+        this.buttonConcatenateResults.setEnabled(this.checkboxConcatenateResults.isSelected());
+    }//GEN-LAST:event_checkboxConcatenateResultsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,15 +351,15 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonConcatenateResults;
+    private javax.swing.JButton buttonGenerateMatrix;
+    private javax.swing.JButton buttonSaveInFolder;
+    private javax.swing.JCheckBox checkboxConcatenateResults;
+    private javax.swing.JCheckBox checkboxGenerateMatrix;
+    private javax.swing.JCheckBox checkboxSaveInFolder;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;

@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import websphinx.Link;
-import java.awt.Dialog;
 import java.util.ArrayList;
 
 /**
@@ -90,7 +89,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
 
-        JDialog_Run.setMaximumSize(new java.awt.Dimension(600, 370));
         JDialog_Run.setMinimumSize(new java.awt.Dimension(600, 370));
         JDialog_Run.setModal(true);
         JDialog_Run.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
@@ -143,10 +141,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
                     .addComponent(buttonStopCrawler)
                     .addComponent(buttonToggleCrawler))
                 .addContainerGap())
+        );
+
         jDialog_restriccion.setMinimumSize(new java.awt.Dimension(500, 243));
         jDialog_restriccion.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         jDialog_restriccion.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog_restriccion.setPreferredSize(new java.awt.Dimension(500, 243));
         jDialog_restriccion.setResizable(false);
 
         jToggleButton_restriccion_enlace.setSelected(true);
@@ -313,7 +312,9 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable_tabla_restricciones);
-        jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
+        if (jTable_tabla_restricciones.getColumnModel().getColumnCount() > 0) {
+            jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         jButton1.setText("Añadir restricción");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -600,7 +601,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
         System.out.println(line);
         this.jTextAreaRun.setText(
             this.jTextAreaRun.getText() + line + '\n');
-
+    }
+        
     private void jComboBox_restriccion_cumplirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_restriccion_cumplirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_restriccion_cumplirActionPerformed
@@ -663,18 +665,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion.setVisible(false);
     }//GEN-LAST:event_jButton_restriccion_aceptarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MainWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog JDialog_Run;
@@ -688,7 +678,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkboxGenerateMatrix;
     private javax.swing.JCheckBox checkboxSaveInFolder;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton_restriccion_aceptar;
     private javax.swing.JButton jButton_restriccion_cancelar;
     private javax.swing.JCheckBox jCheckBox1;

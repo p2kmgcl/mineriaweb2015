@@ -7,6 +7,8 @@ package proyecto;
 
 import java.awt.Dialog;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,12 +16,31 @@ import java.util.ArrayList;
  */
 public class MainWindow extends javax.swing.JFrame {
     private ArrayList<Restriccion> restricciones;
+    Object[][] data;
+    String[] columnNames = {"Tipo", "Elemento", "Valor"};
+    Table tabla;
     /**
      * Creates new form MainWindow
      */
+    public class Table extends DefaultTableModel {
+
+        public Table(Object[][] data, Object[] columnNames) {
+            super(data, columnNames);
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;//To change body of generated methods, choose Tools | Templates.
+        }
+        
+    }
+    
     public MainWindow() {
         initComponents();
+        tabla =  new Table(data, columnNames);
+        jTable_tabla_restricciones.setModel(tabla);
         restricciones = new ArrayList<Restriccion>();
+        
     }
 
     /**
@@ -76,7 +97,6 @@ public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion.setMinimumSize(new java.awt.Dimension(500, 243));
         jDialog_restriccion.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         jDialog_restriccion.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog_restriccion.setPreferredSize(new java.awt.Dimension(500, 243));
         jDialog_restriccion.setResizable(false);
 
         jToggleButton_restriccion_enlace.setSelected(true);
@@ -505,26 +525,32 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void jButton_restriccion_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restriccion_aceptarActionPerformed
         // TODO add your handling code here:
+        Restriccion linea_restriccion = null;
+        String tipo = " ";
         if(jToggleButton_restriccion_enlace.isSelected() == true){
+            tipo = "Enlace";
             switch((String) jComboBox_restriccion_cumplir.getSelectedItem()){
                 case "Si":
-                    restricciones.add(new Restriccion("Enlace", true,(String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    linea_restriccion = new Restriccion("Enlace", true,(String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText());
                     break;
                 case "No":
-                    restricciones.add(new Restriccion("Enlace", false, (String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    linea_restriccion = new Restriccion("Enlace", false, (String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText());
                     break;
             }
         } else{
+            tipo = "Pagina";
             switch((String) jComboBox_restriccion_cumplir.getSelectedItem()){
                 case "Si":
-                    restricciones.add(new Restriccion("Pagina", true,(String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    linea_restriccion = new Restriccion("Pagina", true,(String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText());
                     break;
                 case "No":
-                    restricciones.add(new Restriccion("Pagina", false, (String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()));
+                    linea_restriccion = new Restriccion("Pagina", false, (String) jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText());
                     break;
             }
         }
-        
+        Object[] restriccion = {tipo, jComboBox_restriccion_elemento.getSelectedItem(), jTextField_restriccion_valor.getText()};
+        tabla.addRow(restriccion);
+        restricciones.add(linea_restriccion);
         jTextField_restriccion_valor.setText("Introducir expresion regular");
         jDialog_restriccion.setVisible(false);
     }//GEN-LAST:event_jButton_restriccion_aceptarActionPerformed

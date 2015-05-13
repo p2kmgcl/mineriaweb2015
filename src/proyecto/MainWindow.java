@@ -210,9 +210,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(440, 740));
         setMinimumSize(new java.awt.Dimension(440, 740));
-        setPreferredSize(new java.awt.Dimension(440, 650));
         setResizable(false);
 
         jTextArea1.setColumns(20);

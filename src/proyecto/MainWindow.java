@@ -5,7 +5,11 @@
  */
 package proyecto;
 
-import java.awt.Dialog;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import websphinx.Link;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +18,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author vagrant
  */
-public class MainWindow extends javax.swing.JFrame {
+abstract public class MainWindow extends javax.swing.JFrame {
+
+    abstract public void resetCrawler();
+    abstract public void runCrawler();
+    abstract public void stopCrawler();
+    abstract public Crawly getCrawler();
+
     private ArrayList<Restriccion> restricciones;
     Object[][] data;
     String[] columnNames = {"Tipo", "Elemento", "Valor"};
@@ -52,6 +62,11 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        JDialog_Run = new javax.swing.JDialog();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaRun = new javax.swing.JTextArea();
+        buttonStopCrawler = new javax.swing.JButton();
+        buttonToggleCrawler = new javax.swing.JButton();
         jDialog_restriccion = new javax.swing.JDialog();
         jToggleButton_restriccion_enlace = new javax.swing.JToggleButton();
         jToggleButton_restriccion_pagina = new javax.swing.JToggleButton();
@@ -83,7 +98,7 @@ public class MainWindow extends javax.swing.JFrame {
         buttonGenerateMatrix = new javax.swing.JButton();
         buttonSaveInFolder = new javax.swing.JButton();
         buttonConcatenateResults = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        buttonStartCrawler = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -93,6 +108,60 @@ public class MainWindow extends javax.swing.JFrame {
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+
+        JDialog_Run.setMinimumSize(new java.awt.Dimension(600, 370));
+        JDialog_Run.setModal(true);
+        JDialog_Run.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        JDialog_Run.setResizable(false);
+
+        jTextAreaRun.setColumns(20);
+        jTextAreaRun.setRows(5);
+        jTextAreaRun.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextAreaRun.setDisabledTextColor(new java.awt.Color(51, 51, 51));
+        jTextAreaRun.setEnabled(false);
+        jTextAreaRun.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        jScrollPane3.setViewportView(jTextAreaRun);
+
+        buttonStopCrawler.setText("Finalizar");
+        buttonStopCrawler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonStopCrawlerActionPerformed(evt);
+            }
+        });
+
+        buttonToggleCrawler.setText("Pausar");
+        buttonToggleCrawler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonToggleCrawlerActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout JDialog_RunLayout = new javax.swing.GroupLayout(JDialog_Run.getContentPane());
+        JDialog_Run.getContentPane().setLayout(JDialog_RunLayout);
+        JDialog_RunLayout.setHorizontalGroup(
+            JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JDialog_RunLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDialog_RunLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonToggleCrawler)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonStopCrawler)))
+                .addContainerGap())
+        );
+        JDialog_RunLayout.setVerticalGroup(
+            JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JDialog_RunLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonStopCrawler)
+                    .addComponent(buttonToggleCrawler))
+                .addContainerGap())
+        );
 
         jDialog_restriccion.setMinimumSize(new java.awt.Dimension(500, 243));
         jDialog_restriccion.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
@@ -261,7 +330,9 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable_tabla_restricciones);
-        jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
+        if (jTable_tabla_restricciones.getColumnModel().getColumnCount() > 0) {
+            jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         jButton1.setText("Añadir restricción");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -312,10 +383,10 @@ public class MainWindow extends javax.swing.JFrame {
         buttonConcatenateResults.setText("Examinar...");
         buttonConcatenateResults.setEnabled(false);
 
-        jButton5.setText("Iniciar rastreo");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        buttonStartCrawler.setText("Iniciar rastreo");
+        buttonStartCrawler.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                buttonStartCrawlerActionPerformed(evt);
             }
         });
 
@@ -363,7 +434,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonStartCrawler, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -398,7 +469,7 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jCheckBox1)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 5, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -441,7 +512,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addComponent(checkboxConcatenateResults)
                     .addComponent(buttonConcatenateResults))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonStartCrawler, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -465,9 +536,46 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonSaveInFolderActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void buttonStartCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartCrawlerActionPerformed
+        this.clearLog();
+        this.resetCrawler();
+        this.log("Lanzando crawler");
+        
+        String urls[] = {
+            "http://www.ccsu.edu/anthropology/",
+            "http://www.art.ccsu.edu/",
+            "http://www.communication.ccsu.edu/",
+            "http://web.ccsu.edu/criminology/",
+            "http://www.design.ccsu.edu/",
+            "http://www.econ.ccsu.edu/",
+            "http://www.english.ccsu.edu/",
+            "http://www.geography.ccsu.edu/",
+            "http://www.history.ccsu.edu/",
+            "http://web.ccsu.edu/journalism/",
+            "http://www.modlang.ccsu.edu/",
+            "http://www.music.ccsu.edu/",
+            "http://you.ccsu.edu/philosophy/",
+            "http://www.polisci.ccsu.edu/",
+            "http://web.ccsu.edu/psychology/",
+            "http://www.sociology.ccsu.edu/",
+            "http://www.theatre.ccsu.edu/"
+        };
+        
+        for (String url : urls) {
+            try {
+                this.getCrawler().addRoot(new Link(new URL(url)));
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        this.runCrawler();
+
+        this.buttonToggleCrawler.setText("Pausar");
+        this.JDialog_Run.setLocationRelativeTo(this);
+        this.JDialog_Run.setModal(true);
+        this.JDialog_Run.setVisible(true);
+    }//GEN-LAST:event_buttonStartCrawlerActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
@@ -485,6 +593,34 @@ public class MainWindow extends javax.swing.JFrame {
         this.buttonConcatenateResults.setEnabled(this.checkboxConcatenateResults.isSelected());
     }//GEN-LAST:event_checkboxConcatenateResultsActionPerformed
 
+    private void buttonStopCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStopCrawlerActionPerformed
+        this.stopCrawler();
+        JDialog_Run.setVisible(false);
+    }//GEN-LAST:event_buttonStopCrawlerActionPerformed
+
+    private void buttonToggleCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonToggleCrawlerActionPerformed
+        if (buttonToggleCrawler.getText().equals("Pausar")) {
+            this.log("Pausando rastreo");
+            this.buttonToggleCrawler.setText("Continuar");
+            this.getCrawler().pause();
+        } else {
+            this.log("Reanudando rastreo");
+            this.buttonToggleCrawler.setText("Pausar");
+            this.runCrawler();
+        }
+    }//GEN-LAST:event_buttonToggleCrawlerActionPerformed
+    
+    public void clearLog () {
+        System.out.println("Log cleared");
+        this.jTextAreaRun.setText("");
+    }
+    
+    public void log (String line) {
+        System.out.println(line);
+        this.jTextAreaRun.setText(
+            this.jTextAreaRun.getText() + line + '\n');
+    }
+        
     private void jComboBox_restriccion_cumplirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_restriccion_cumplirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_restriccion_cumplirActionPerformed
@@ -553,28 +689,19 @@ public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion.setVisible(false);
     }//GEN-LAST:event_jButton_restriccion_aceptarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MainWindow().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog JDialog_Run;
     private javax.swing.JButton buttonConcatenateResults;
     private javax.swing.JButton buttonGenerateMatrix;
     private javax.swing.JButton buttonSaveInFolder;
+    private javax.swing.JButton buttonStartCrawler;
+    private javax.swing.JButton buttonStopCrawler;
+    private javax.swing.JButton buttonToggleCrawler;
     private javax.swing.JCheckBox checkboxConcatenateResults;
     private javax.swing.JCheckBox checkboxGenerateMatrix;
     private javax.swing.JCheckBox checkboxSaveInFolder;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton_restriccion_aceptar;
     private javax.swing.JButton jButton_restriccion_cancelar;
     private javax.swing.JCheckBox jCheckBox1;
@@ -602,9 +729,11 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable_tabla_restricciones;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaRun;
     private javax.swing.JTextField jTextField_restriccion_valor;
     private javax.swing.JToggleButton jToggleButton_restriccion_enlace;
     private javax.swing.JToggleButton jToggleButton_restriccion_pagina;

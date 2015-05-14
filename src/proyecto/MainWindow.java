@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Pablo Molina y Gregorio Carazo
  */
+
 package proyecto;
 
 import java.net.MalformedURLException;
@@ -11,13 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import websphinx.Link;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author vagrant
- */
 abstract public class MainWindow extends javax.swing.JFrame {
 
     abstract public void resetCrawler();
@@ -25,7 +19,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     abstract public void stopCrawler();
     abstract public Crawly getCrawler();
 
-    private ArrayList<Restriccion> restricciones;
+    private final ArrayList<Restriccion> restricciones;
     Object[][] data;
     String[] columnNames = {"Tipo", "Elemento", "Valor"};
     Table tabla;
@@ -49,8 +43,19 @@ abstract public class MainWindow extends javax.swing.JFrame {
         initComponents();
         tabla =  new Table(data, columnNames);
         jTable_tabla_restricciones.setModel(tabla);
-        restricciones = new ArrayList<Restriccion>();
+        restricciones = new ArrayList<>();
         
+    }
+    
+    public void clearLog () {
+        System.out.println("Log cleared");
+        this.jTextAreaRun.setText("");
+    }
+    
+    public void log (String line) {
+        System.out.println(line);
+        this.jTextAreaRun.setText(
+            this.jTextAreaRun.getText() + line + '\n');
     }
 
     /**
@@ -609,18 +614,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
             this.runCrawler();
         }
     }//GEN-LAST:event_buttonToggleCrawlerActionPerformed
-    
-    public void clearLog () {
-        System.out.println("Log cleared");
-        this.jTextAreaRun.setText("");
-    }
-    
-    public void log (String line) {
-        System.out.println(line);
-        this.jTextAreaRun.setText(
-            this.jTextAreaRun.getText() + line + '\n');
-    }
-        
+       
     private void jComboBox_restriccion_cumplirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_restriccion_cumplirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_restriccion_cumplirActionPerformed

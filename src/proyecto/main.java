@@ -1,3 +1,7 @@
+/**
+ * @author Pablo Molina y Gregorio Carazo
+ */
+
 package proyecto;
 
 public class main {

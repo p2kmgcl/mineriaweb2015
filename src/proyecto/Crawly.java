@@ -1,8 +1,11 @@
+/**
+ * @author Pablo Molina y Gregorio Carazo
+ */
+
 package proyecto;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -13,7 +16,6 @@ import websphinx.DownloadParameters;
 import websphinx.Page;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import websphinx.Link;
 
 abstract public class Crawly extends Crawler {
     

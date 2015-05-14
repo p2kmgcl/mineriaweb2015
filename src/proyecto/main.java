@@ -46,10 +46,17 @@ public class main {
                     @Override public void log(String log) { main.mainWindow.log(log); }
                     @Override public void clearLog() { main.mainWindow.clearLog(); }
                 };
+                
+                main.crawly.addLinkListener(new CrawlyLinkListener());
+                main.crawly.addCrawlListener(new CrawlyListener());
             }
         };
         
         main.mainWindow.resetCrawler();
         main.mainWindow.setVisible(true);
+    }
+    
+    public static MainWindow getMainWindow () {
+        return main.mainWindow;
     }
 }

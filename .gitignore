@@ -5,3 +5,4 @@
 /output
 /outputText*
 /dist/
+hs_err_pid*.log

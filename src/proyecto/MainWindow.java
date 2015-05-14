@@ -20,6 +20,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
     abstract public void runCrawler();
     abstract public void stopCrawler();
     abstract public Crawly getCrawler();
+    
+    private int skippedLinks = 0; // Enlaces ignorados por el crawler
+    private int tooDeepLinks = 0; // Enlaces no visitados por ser demasiado profundos
+    private int visitedLinks = 0; // Enlaces visitados
+    private int errorLinks = 0; // Visitas fallidas (404, 403...)
 
     private final ArrayList<Restriccion> restricciones;
     Object[][] data;
@@ -58,6 +63,26 @@ abstract public class MainWindow extends javax.swing.JFrame {
         System.out.println(line);
         this.jTextAreaRun.setText(
             this.jTextAreaRun.getText() + line + '\n');
+    }
+    
+    public void incSkippedLinks () {
+        this.skippedLinks++;
+        this.jLabelSkippedLinks.setText("" + this.skippedLinks);
+    }
+    
+    public void incTooDeepLinks () {
+        this.tooDeepLinks++;
+        this.jLabelTooDeepLinks.setText("" + this.tooDeepLinks);
+    }
+    
+    public void incVisitedLinks () {
+        this.visitedLinks++;
+        this.jLabelVisitedLinks.setText("" + this.visitedLinks);
+    }
+    
+    public void incErrorLinks () {
+        this.errorLinks++;
+        this.jLabelErrorLinks.setText("" + this.errorLinks);
     }
     
     public void setCrawlerOptions () {
@@ -135,6 +160,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
         downloadParameters.changeUserAgent("ChupiCrawler Mozilla/5.0 (X11; U; Linux x86_64;");
         this.getCrawler().setDownloadParameters(downloadParameters);
     }
+    
+    public void crawlerEnd () {
+        this.buttonToggleCrawler.setVisible(false);
+        this.buttonStopCrawler.setText("Cerrar log");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -150,6 +180,14 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jTextAreaRun = new javax.swing.JTextArea();
         buttonStopCrawler = new javax.swing.JButton();
         buttonToggleCrawler = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabelTooDeepLinks = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelSkippedLinks = new javax.swing.JLabel();
+        jLabelVisitedLinks = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabelErrorLinks = new javax.swing.JLabel();
         jDialog_restriccion = new javax.swing.JDialog();
         jToggleButton_restriccion_enlace = new javax.swing.JToggleButton();
         jToggleButton_restriccion_pagina = new javax.swing.JToggleButton();
@@ -192,10 +230,15 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
 
-        JDialog_Run.setMinimumSize(new java.awt.Dimension(600, 370));
-        JDialog_Run.setModal(true);
+        JDialog_Run.setMinimumSize(new java.awt.Dimension(600, 580));
         JDialog_Run.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        JDialog_Run.setPreferredSize(new java.awt.Dimension(600, 580));
         JDialog_Run.setResizable(false);
+        JDialog_Run.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                runDialogClosed(evt);
+            }
+        });
 
         jTextAreaRun.setColumns(20);
         jTextAreaRun.setRows(5);
@@ -219,6 +262,22 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Ignorados: ");
+
+        jLabel7.setText("Demasiado profundos:");
+
+        jLabelTooDeepLinks.setText("000000");
+
+        jLabel6.setText("Descargados:");
+
+        jLabelSkippedLinks.setText("000000");
+
+        jLabelVisitedLinks.setText("000000");
+
+        jLabel8.setText("Fallidos:");
+
+        jLabelErrorLinks.setText("000000");
+
         javax.swing.GroupLayout JDialog_RunLayout = new javax.swing.GroupLayout(JDialog_Run.getContentPane());
         JDialog_Run.getContentPane().setLayout(JDialog_RunLayout);
         JDialog_RunLayout.setHorizontalGroup(
@@ -226,24 +285,54 @@ abstract public class MainWindow extends javax.swing.JFrame {
             .addGroup(JDialog_RunLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JDialog_RunLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(buttonToggleCrawler)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonStopCrawler)))
+                    .addGroup(JDialog_RunLayout.createSequentialGroup()
+                        .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelSkippedLinks)
+                            .addGroup(JDialog_RunLayout.createSequentialGroup()
+                                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelErrorLinks)
+                                    .addComponent(jLabelTooDeepLinks))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(JDialog_RunLayout.createSequentialGroup()
+                                .addComponent(jLabelVisitedLinks)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonToggleCrawler)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonStopCrawler))))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
                 .addContainerGap())
         );
         JDialog_RunLayout.setVerticalGroup(
             JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JDialog_RunLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonStopCrawler)
-                    .addComponent(buttonToggleCrawler))
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelSkippedLinks))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabelTooDeepLinks, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelErrorLinks)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelVisitedLinks)
+                        .addComponent(buttonStopCrawler)
+                        .addComponent(buttonToggleCrawler))
+                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jDialog_restriccion.setMinimumSize(new java.awt.Dimension(500, 243));
@@ -622,6 +711,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveInFolderActionPerformed
 
     private void buttonStartCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartCrawlerActionPerformed
+        this.visitedLinks = 0;
+        this.skippedLinks = 0;
+        this.tooDeepLinks = 0;
+        this.errorLinks = 0;
+        this.jLabelVisitedLinks.setText("0");
+        this.jLabelSkippedLinks.setText("0");
+        this.jLabelTooDeepLinks.setText("0");
+        this.jLabelErrorLinks.setText("0");
+        this.buttonToggleCrawler.setVisible(true);
+        this.buttonStopCrawler.setText("Finalizar");
         this.clearLog();
         this.resetCrawler();
         this.log("Configurando crawler");
@@ -649,23 +748,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private void checkboxConcatenateResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxConcatenateResultsActionPerformed
         this.buttonConcatenateResults.setEnabled(this.checkboxConcatenateResults.isSelected());
     }//GEN-LAST:event_checkboxConcatenateResultsActionPerformed
-
-    private void buttonStopCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStopCrawlerActionPerformed
-        this.stopCrawler();
-        JDialog_Run.setVisible(false);
-    }//GEN-LAST:event_buttonStopCrawlerActionPerformed
-
-    private void buttonToggleCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonToggleCrawlerActionPerformed
-        if (buttonToggleCrawler.getText().equals("Pausar")) {
-            this.log("Pausando rastreo");
-            this.buttonToggleCrawler.setText("Continuar");
-            this.getCrawler().pause();
-        } else {
-            this.log("Reanudando rastreo");
-            this.buttonToggleCrawler.setText("Pausar");
-            this.runCrawler();
-        }
-    }//GEN-LAST:event_buttonToggleCrawlerActionPerformed
        
     private void jComboBox_restriccion_cumplirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_restriccion_cumplirActionPerformed
         // TODO add your handling code here:
@@ -735,6 +817,27 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion.setVisible(false);
     }//GEN-LAST:event_jButton_restriccion_aceptarActionPerformed
 
+    private void buttonToggleCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonToggleCrawlerActionPerformed
+        if (buttonToggleCrawler.getText().equals("Pausar")) {
+            this.log("Pausando rastreo");
+            this.buttonToggleCrawler.setText("Continuar");
+            this.getCrawler().pause();
+        } else {
+            this.log("Reanudando rastreo");
+            this.buttonToggleCrawler.setText("Pausar");
+            this.runCrawler();
+        }
+    }//GEN-LAST:event_buttonToggleCrawlerActionPerformed
+
+    private void buttonStopCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStopCrawlerActionPerformed
+        this.stopCrawler();
+        JDialog_Run.setVisible(false);
+    }//GEN-LAST:event_buttonStopCrawlerActionPerformed
+
+    private void runDialogClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_runDialogClosed
+        this.stopCrawler();
+        JDialog_Run.setVisible(false);
+    }//GEN-LAST:event_runDialogClosed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog JDialog_Run;
@@ -762,6 +865,14 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelErrorLinks;
+    private javax.swing.JLabel jLabelSkippedLinks;
+    private javax.swing.JLabel jLabelTooDeepLinks;
+    private javax.swing.JLabel jLabelVisitedLinks;
     private javax.swing.JLabel jLabel_restriccion_cumplirse;
     private javax.swing.JLabel jLabel_restriccion_elemento;
     private javax.swing.JLabel jLabel_restriccion_valor;

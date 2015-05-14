@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
 import websphinx.Crawler;
-import websphinx.DownloadParameters;
 import websphinx.Page;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;

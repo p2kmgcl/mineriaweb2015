@@ -28,22 +28,8 @@ abstract public class Crawly extends Crawler {
 
     public Crawly() {
         super();
-        
         // Initiate array of extensions
         extensions = new ArrayList<>();
-        
-        // User agent, robots.txt...
-        DownloadParameters downloadParameters = new DownloadParameters();
-        downloadParameters.changeObeyRobotExclusion(false); // :)
-        downloadParameters.changeUserAgent("ChupiCrawler Mozilla/5.0 (X11; U; Linux x86_64;");
-        this.setDownloadParameters(downloadParameters);
-        
-        // SUBTREE, SERVER, WEB
-        this.setDomain(Crawler.SERVER);
-        // ALL_LINKS, HYPERLINKS, LINKS_AND_IMAGES
-        this.setLinkType(Crawler.ALL_LINKS);
-        // Depth
-        this.setMaxDepth(1);
     }
 
     /**

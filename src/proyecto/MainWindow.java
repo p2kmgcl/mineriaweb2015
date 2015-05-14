@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 import websphinx.Link;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import websphinx.Crawler;
+import websphinx.DownloadParameters;
 
 abstract public class MainWindow extends javax.swing.JFrame {
 
@@ -57,6 +59,82 @@ abstract public class MainWindow extends javax.swing.JFrame {
         this.jTextAreaRun.setText(
             this.jTextAreaRun.getText() + line + '\n');
     }
+    
+    public void setCrawlerOptions () {
+        // Urls
+        String[] urls = this.textAreaUrls.getText().split("\n");
+        for (String url : urls) {
+            try {
+                this.getCrawler().addRoot(new Link(new URL(url)));
+                this.log("Añadida url '" + url + "'");
+            } catch (MalformedURLException ex) {
+                this.log("Ignorada url '" + url + "'");
+                Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        // Alcance
+        switch (this.jComboBoxScope.getSelectedIndex()) {
+            case 0:
+                this.log("Alcance: Subarbol");
+                this.getCrawler().setDomain(Crawler.SUBTREE);
+                break;
+            case 1:
+                this.log("Alcance: Servidor");
+                this.getCrawler().setDomain(Crawler.SERVER);
+                break;
+            case 2:
+                this.log("Alcance: Web");
+                this.getCrawler().setDomain(Crawler.WEB);
+                break;
+        }
+        
+        // Límite de saltos
+        this.log("Límite de saltos: " + (int) this.jSpinnerMaxDepth.getValue());
+        this.getCrawler().setMaxDepth((int) this.jSpinnerMaxDepth.getValue());
+    
+        // Tipo de exploración
+        switch (this.jComboBoxExplorationType.getSelectedIndex()) {
+            case 0:
+                this.log("Exploración por anchura");
+                this.getCrawler().setDepthFirst(false);
+                break;
+            case 1:
+                this.log("Exploración por profundidad");
+                this.getCrawler().setDepthFirst(true);
+                break;
+        }
+        
+        // Enlaces
+        switch (this.jComboBoxLinkType.getSelectedIndex()) {
+            case 0:
+                this.log("Exploración de hiperenlaces");
+                this.getCrawler().setLinkType(Crawler.HYPERLINKS);
+                break;
+            case 1:
+                this.log("Exploración de hiperenlaces e imágenes");
+                this.getCrawler().setLinkType(Crawler.HYPERLINKS_AND_IMAGES);
+                break;
+            case 2:
+                this.log("Exploración completa");
+                this.getCrawler().setLinkType(Crawler.ALL_LINKS);
+                break;
+        }
+        
+        // Restricciones...
+        
+        // Robots.txt
+        DownloadParameters downloadParameters = new DownloadParameters();
+        if (this.jCheckBoxObeyRobots.isSelected()) {
+            this.log("Obedeciendo ficheros robots.txt");
+            downloadParameters.changeObeyRobotExclusion(true);
+        } else {
+            this.log("Ignorando ficheros robots.txt");
+            downloadParameters.changeObeyRobotExclusion(false);
+        }
+        downloadParameters.changeUserAgent("ChupiCrawler Mozilla/5.0 (X11; U; Linux x86_64;");
+        this.getCrawler().setDownloadParameters(downloadParameters);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,19 +162,19 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jButton_restriccion_aceptar = new javax.swing.JButton();
         jButton_restriccion_cancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textAreaUrls = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jSpinner1 = new javax.swing.JSpinner();
+        jComboBoxScope = new javax.swing.JComboBox();
+        jSpinnerMaxDepth = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        jComboBoxExplorationType = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox();
+        jComboBoxLinkType = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_tabla_restricciones = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBoxObeyRobots = new javax.swing.JCheckBox();
         checkboxSaveInFolder = new javax.swing.JCheckBox();
         checkboxGenerateMatrix = new javax.swing.JCheckBox();
         checkboxConcatenateResults = new javax.swing.JCheckBox();
@@ -287,29 +365,30 @@ abstract public class MainWindow extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(440, 740));
         setResizable(false);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setToolTipText("");
-        jScrollPane1.setViewportView(jTextArea1);
+        textAreaUrls.setColumns(20);
+        textAreaUrls.setRows(5);
+        textAreaUrls.setText("http://www.ccsu.edu/anthropology/\nhttp://www.art.ccsu.edu/\nhttp://www.communication.ccsu.edu/\nhttp://web.ccsu.edu/criminology/\nhttp://www.design.ccsu.edu/\nhttp://www.econ.ccsu.edu/\nhttp://www.english.ccsu.edu/\nhttp://www.geography.ccsu.edu/\nhttp://www.history.ccsu.edu/\nhttp://web.ccsu.edu/journalism/\nhttp://www.modlang.ccsu.edu/\nhttp://www.music.ccsu.edu/\nhttp://you.ccsu.edu/philosophy/\nhttp://www.polisci.ccsu.edu/\nhttp://web.ccsu.edu/psychology/\nhttp://www.sociology.ccsu.edu/\nhttp://www.theatre.ccsu.edu/\n");
+        textAreaUrls.setToolTipText("");
+        jScrollPane1.setViewportView(textAreaUrls);
 
         jLabel1.setText("Alcance:");
 
         jLabel2.setText("Límite de saltos:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Subárbol", "Servidor", "Web" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxScope.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Subárbol", "Servidor", "Web" }));
+        jComboBoxScope.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxScopeActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Tipo de exploración: ");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Anchura", "Profundidad" }));
+        jComboBoxExplorationType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Anchura", "Profundidad" }));
 
         jLabel4.setText("Enlaces:");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hiperenlaces", "Imágenes", "Todos" }));
+        jComboBoxLinkType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hiperenlaces", "Hiperenlaces e imágenes", "Todos" }));
 
         jTable_tabla_restricciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -346,10 +425,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox1.setText("Obedecer ficheros robots.txt");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxObeyRobots.setSelected(true);
+        jCheckBoxObeyRobots.setText("Obedecer ficheros robots.txt");
+        jCheckBoxObeyRobots.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                jCheckBoxObeyRobotsActionPerformed(evt);
             }
         });
 
@@ -447,16 +527,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSpinner1)))
+                            .addComponent(jComboBoxScope, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSpinnerMaxDepth)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jComboBoxExplorationType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxLinkType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(checkboxGenerateMatrix)
@@ -472,7 +552,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox1)
+                            .addComponent(jCheckBoxObeyRobots)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -485,25 +565,25 @@ abstract public class MainWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxScope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinnerMaxDepth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxExplorationType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxLinkType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addGap(14, 14, 14)
-                .addComponent(jCheckBox1)
+                .addComponent(jCheckBoxObeyRobots)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkboxSaveInFolder)
@@ -529,9 +609,9 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void jCheckBoxObeyRobotsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxObeyRobotsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_jCheckBoxObeyRobotsActionPerformed
 
     private void checkboxGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxGenerateMatrixActionPerformed
         this.buttonGenerateMatrix.setEnabled(this.checkboxGenerateMatrix.isSelected());
@@ -544,47 +624,19 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private void buttonStartCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartCrawlerActionPerformed
         this.clearLog();
         this.resetCrawler();
+        this.log("Configurando crawler");
+        this.setCrawlerOptions();
         this.log("Lanzando crawler");
-        
-        String urls[] = {
-            "http://www.ccsu.edu/anthropology/",
-            "http://www.art.ccsu.edu/",
-            "http://www.communication.ccsu.edu/",
-            "http://web.ccsu.edu/criminology/",
-            "http://www.design.ccsu.edu/",
-            "http://www.econ.ccsu.edu/",
-            "http://www.english.ccsu.edu/",
-            "http://www.geography.ccsu.edu/",
-            "http://www.history.ccsu.edu/",
-            "http://web.ccsu.edu/journalism/",
-            "http://www.modlang.ccsu.edu/",
-            "http://www.music.ccsu.edu/",
-            "http://you.ccsu.edu/philosophy/",
-            "http://www.polisci.ccsu.edu/",
-            "http://web.ccsu.edu/psychology/",
-            "http://www.sociology.ccsu.edu/",
-            "http://www.theatre.ccsu.edu/"
-        };
-        
-        for (String url : urls) {
-            try {
-                this.getCrawler().addRoot(new Link(new URL(url)));
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
         this.runCrawler();
-
         this.buttonToggleCrawler.setText("Pausar");
         this.JDialog_Run.setLocationRelativeTo(this);
         this.JDialog_Run.setModal(true);
         this.JDialog_Run.setVisible(true);
     }//GEN-LAST:event_buttonStartCrawlerActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxScopeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxScopeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBoxScopeActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
@@ -698,11 +750,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_restriccion_aceptar;
     private javax.swing.JButton jButton_restriccion_cancelar;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JCheckBox jCheckBoxObeyRobots;
+    private javax.swing.JComboBox jComboBoxExplorationType;
+    private javax.swing.JComboBox jComboBoxLinkType;
+    private javax.swing.JComboBox jComboBoxScope;
     private javax.swing.JComboBox jComboBox_restriccion_cumplir;
     private javax.swing.JComboBox jComboBox_restriccion_elemento;
     private javax.swing.JDialog jDialog_restriccion;
@@ -724,12 +776,12 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinnerMaxDepth;
     private javax.swing.JTable jTable_tabla_restricciones;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextAreaRun;
     private javax.swing.JTextField jTextField_restriccion_valor;
     private javax.swing.JToggleButton jToggleButton_restriccion_enlace;
     private javax.swing.JToggleButton jToggleButton_restriccion_pagina;
+    private javax.swing.JTextArea textAreaUrls;
     // End of variables declaration//GEN-END:variables
 }

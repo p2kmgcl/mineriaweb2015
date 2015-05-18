@@ -47,6 +47,7 @@ public class main {
                     @Override public void clearLog() { main.mainWindow.clearLog(); }
                 };
                 
+                main.crawly.setSynchronous(false);
                 main.crawly.addLinkListener(new CrawlyLinkListener());
                 main.crawly.addCrawlListener(new CrawlyListener());
             }

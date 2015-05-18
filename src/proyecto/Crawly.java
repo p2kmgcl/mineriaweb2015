@@ -93,6 +93,13 @@ abstract public class Crawly extends Crawler {
             Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @Override
+    public void run () {
+        System.out.println("-------- Inicio");
+        super.run();
+        System.out.println("-------- Fin");
+    }
 
     /**
      * Este método se ejecuta para cada página encontrada por el crawler.
@@ -127,7 +134,6 @@ abstract public class Crawly extends Crawler {
             try {
                 fileName = OUTPUT_DIR + fileName;
                 fileName = fileName.replaceAll("[^A-Za-z0-9áéíóúÁÉÍÓÚ\n\\/\\. ]", "");
-                this.log(fileName);
                 File file = new File(fileName);
                 FileUtils.writeByteArrayToFile(file, bytes);
             } catch (IOException ex) {

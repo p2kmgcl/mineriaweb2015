@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import websphinx.Link;
 import java.util.ArrayList;
+import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 import websphinx.Crawler;
 import websphinx.DownloadParameters;
@@ -61,8 +62,9 @@ abstract public class MainWindow extends javax.swing.JFrame {
     
     public void log (String line) {
         System.out.println(line);
-        this.jTextAreaRun.setText(
-            this.jTextAreaRun.getText() + line + '\n');
+        JScrollBar scrollBar = this.jScrollPaneRun.getVerticalScrollBar();
+        scrollBar.setValue(scrollBar.getMaximum());
+        this.jTextAreaRun.setText(this.jTextAreaRun.getText() + line + '\n');
     }
     
     public void incSkippedLinks () {
@@ -176,7 +178,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         JDialog_Run = new javax.swing.JDialog();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPaneRun = new javax.swing.JScrollPane();
         jTextAreaRun = new javax.swing.JTextArea();
         buttonStopCrawler = new javax.swing.JButton();
         buttonToggleCrawler = new javax.swing.JButton();
@@ -232,7 +234,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         JDialog_Run.setMinimumSize(new java.awt.Dimension(600, 580));
         JDialog_Run.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
-        JDialog_Run.setPreferredSize(new java.awt.Dimension(600, 580));
         JDialog_Run.setResizable(false);
         JDialog_Run.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -246,7 +247,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jTextAreaRun.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         jTextAreaRun.setEnabled(false);
         jTextAreaRun.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jScrollPane3.setViewportView(jTextAreaRun);
+        jScrollPaneRun.setViewportView(jTextAreaRun);
 
         buttonStopCrawler.setText("Finalizar");
         buttonStopCrawler.addActionListener(new java.awt.event.ActionListener() {
@@ -305,14 +306,14 @@ abstract public class MainWindow extends javax.swing.JFrame {
                                     .addComponent(jLabelErrorLinks)
                                     .addComponent(jLabelTooDeepLinks))
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
+                    .addComponent(jScrollPaneRun, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE))
                 .addContainerGap())
         );
         JDialog_RunLayout.setVerticalGroup(
             JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JDialog_RunLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneRun, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(JDialog_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
@@ -886,7 +887,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPaneRun;
     private javax.swing.JSpinner jSpinnerMaxDepth;
     private javax.swing.JTable jTable_tabla_restricciones;
     private javax.swing.JTextArea jTextAreaRun;

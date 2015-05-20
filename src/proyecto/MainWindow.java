@@ -1001,6 +1001,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
     private void jMenuItem_menu_lista_aniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_menu_lista_aniadirActionPerformed
         // TODO add your handling code here:
+        jTextField_edit_url.setText("");
         jDialog_edit_url.setVisible(true);
     }//GEN-LAST:event_jMenuItem_menu_lista_aniadirActionPerformed
 

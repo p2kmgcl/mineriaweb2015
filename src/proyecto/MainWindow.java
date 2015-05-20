@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import websphinx.Link;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JScrollBar;
 import javax.swing.table.DefaultTableModel;
 import websphinx.Crawler;
@@ -29,8 +30,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
     private final ArrayList<Restriccion> restricciones;
     Object[][] data;
+    DefaultListModel<String> lista;
     String[] columnNames = {"Tipo", "Elemento", "Valor"};
     Table tabla;
+    boolean modificar_url;
+
     /**
      * Creates new form MainWindow
      */
@@ -48,11 +52,35 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }
     
     public MainWindow() {
+        String urls[] = {
+           "http://www.ccsu.edu/anthropology/",
+           "http://www.art.ccsu.edu/",
+           "http://www.communication.ccsu.edu/",
+           "http://web.ccsu.edu/criminology/",
+           "http://www.design.ccsu.edu/",
+           "http://www.econ.ccsu.edu/",
+           "http://www.english.ccsu.edu/",
+           "http://www.geography.ccsu.edu/",
+           "http://www.history.ccsu.edu/",
+           "http://web.ccsu.edu/journalism/",
+           "http://www.modlang.ccsu.edu/",
+           "http://www.music.ccsu.edu/",
+           "http://you.ccsu.edu/philosophy/",
+           "http://www.polisci.ccsu.edu/",
+           "http://web.ccsu.edu/psychology/",
+           "http://www.sociology.ccsu.edu/",
+           "http://www.theatre.ccsu.edu/"
+        };
         initComponents();
         tabla =  new Table(data, columnNames);
+        lista = new DefaultListModel<String>();
+        for(int i = 0; i < urls.length; ++i){
+            lista.addElement(urls[i]);
+        } 
+        jList_url.setModel(lista);
         jTable_tabla_restricciones.setModel(tabla);
         restricciones = new ArrayList<>();
-        
+        modificar_url = false;
     }
     
     public void clearLog () {
@@ -89,7 +117,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
     
     public void setCrawlerOptions () {
         // Urls
-        String[] urls = this.textAreaUrls.getText().split("\n");
+        String urls[] = new String[lista.getSize()];
+        lista.copyInto(urls);
         for (String url : urls) {
             try {
                 this.getCrawler().addRoot(new Link(new URL(url)));
@@ -167,7 +196,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         this.buttonToggleCrawler.setVisible(false);
         this.buttonStopCrawler.setText("Cerrar log");
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -201,8 +229,15 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jTextField_restriccion_valor = new javax.swing.JTextField();
         jButton_restriccion_aceptar = new javax.swing.JButton();
         jButton_restriccion_cancelar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textAreaUrls = new javax.swing.JTextArea();
+        jPopupMenu_lista = new javax.swing.JPopupMenu();
+        jMenuItem_menu_lista_modificar = new javax.swing.JMenuItem();
+        jMenuItem_menu_lista_eliminar = new javax.swing.JMenuItem();
+        jMenuItem_menu_lista_aniadir = new javax.swing.JMenuItem();
+        jDialog_edit_url = new javax.swing.JDialog();
+        jTextField_edit_url = new javax.swing.JTextField();
+        jButton_edit_url_aceptar = new javax.swing.JButton();
+        jButton_edit_url_cancelar = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxScope = new javax.swing.JComboBox();
@@ -222,6 +257,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
         buttonSaveInFolder = new javax.swing.JButton();
         buttonConcatenateResults = new javax.swing.JButton();
         buttonStartCrawler = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList_url = new javax.swing.JList();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -451,15 +488,87 @@ abstract public class MainWindow extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
+        jMenuItem_menu_lista_modificar.setText("Modificar");
+        jMenuItem_menu_lista_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_menu_lista_modificarActionPerformed(evt);
+            }
+        });
+        jPopupMenu_lista.add(jMenuItem_menu_lista_modificar);
+
+        jMenuItem_menu_lista_eliminar.setText("Eliminar");
+        jMenuItem_menu_lista_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_menu_lista_eliminarActionPerformed(evt);
+            }
+        });
+        jPopupMenu_lista.add(jMenuItem_menu_lista_eliminar);
+
+        jMenuItem_menu_lista_aniadir.setText("Añadir");
+        jMenuItem_menu_lista_aniadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_menu_lista_aniadirActionPerformed(evt);
+            }
+        });
+        jPopupMenu_lista.add(jMenuItem_menu_lista_aniadir);
+
+        jDialog_edit_url.setMinimumSize(new java.awt.Dimension(402, 155));
+        jDialog_edit_url.setModal(true);
+        jDialog_edit_url.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        jDialog_edit_url.setResizable(false);
+
+        jButton_edit_url_aceptar.setText("Aceptar");
+        jButton_edit_url_aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_edit_url_aceptarActionPerformed(evt);
+            }
+        });
+
+        jButton_edit_url_cancelar.setText("Cancelar");
+        jButton_edit_url_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_edit_url_cancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Introduzca la url");
+
+        javax.swing.GroupLayout jDialog_edit_urlLayout = new javax.swing.GroupLayout(jDialog_edit_url.getContentPane());
+        jDialog_edit_url.getContentPane().setLayout(jDialog_edit_urlLayout);
+        jDialog_edit_urlLayout.setHorizontalGroup(
+            jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_edit_urlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField_edit_url)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_edit_urlLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jButton_edit_url_cancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                .addComponent(jButton_edit_url_aceptar)
+                .addGap(66, 66, 66))
+            .addGroup(jDialog_edit_urlLayout.createSequentialGroup()
+                .addGap(148, 148, 148)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jDialog_edit_urlLayout.setVerticalGroup(
+            jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_edit_urlLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField_edit_url, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_edit_url_aceptar)
+                    .addComponent(jButton_edit_url_cancelar))
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(440, 740));
         setResizable(false);
-
-        textAreaUrls.setColumns(20);
-        textAreaUrls.setRows(5);
-        textAreaUrls.setText("http://www.ccsu.edu/anthropology/\nhttp://www.art.ccsu.edu/\nhttp://www.communication.ccsu.edu/\nhttp://web.ccsu.edu/criminology/\nhttp://www.design.ccsu.edu/\nhttp://www.econ.ccsu.edu/\nhttp://www.english.ccsu.edu/\nhttp://www.geography.ccsu.edu/\nhttp://www.history.ccsu.edu/\nhttp://web.ccsu.edu/journalism/\nhttp://www.modlang.ccsu.edu/\nhttp://www.music.ccsu.edu/\nhttp://you.ccsu.edu/philosophy/\nhttp://www.polisci.ccsu.edu/\nhttp://web.ccsu.edu/psychology/\nhttp://www.sociology.ccsu.edu/\nhttp://www.theatre.ccsu.edu/\n");
-        textAreaUrls.setToolTipText("");
-        jScrollPane1.setViewportView(textAreaUrls);
 
         jLabel1.setText("Alcance:");
 
@@ -504,9 +613,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable_tabla_restricciones);
-        if (jTable_tabla_restricciones.getColumnModel().getColumnCount() > 0) {
-            jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
-        }
+        jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
 
         jButton1.setText("Añadir restricción");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -565,6 +672,19 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jList_url.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "1", "2", "3" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jList_url.setName(""); // NOI18N
+        jList_url.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList_urlMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jList_url);
+
         jMenu1.setText("Archivo");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -609,8 +729,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
                     .addComponent(buttonStartCrawler, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -650,9 +770,9 @@ abstract public class MainWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(7, 7, 7)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jComboBoxScope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -840,6 +960,50 @@ abstract public class MainWindow extends javax.swing.JFrame {
         JDialog_Run.setVisible(false);
     }//GEN-LAST:event_runDialogClosed
 
+    private void jList_urlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_urlMouseClicked
+        // TODO add your handling code here:
+        if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3 && jList_url.getSelectedIndex() != -1){
+            jMenuItem_menu_lista_modificar.setVisible(true);
+            jMenuItem_menu_lista_eliminar.setVisible(true);
+            jPopupMenu_lista.show(evt.getComponent(), evt.getX(), evt.getY());
+        }else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3 && jList_url.getSelectedIndex() == -1){
+            jMenuItem_menu_lista_modificar.setVisible(false);
+            jMenuItem_menu_lista_eliminar.setVisible(false);
+            jPopupMenu_lista.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jList_urlMouseClicked
+
+    private void jMenuItem_menu_lista_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_menu_lista_modificarActionPerformed
+        // TODO add your handling code here:
+        jTextField_edit_url.setText((String) jList_url.getSelectedValue());
+        modificar_url = true;
+        jDialog_edit_url.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_menu_lista_modificarActionPerformed
+
+    private void jButton_edit_url_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_edit_url_aceptarActionPerformed
+        // TODO add your handling code here:
+        if(modificar_url == true)
+            lista.setElementAt(jTextField_edit_url.getText(), jList_url.getSelectedIndex());
+        else
+            lista.addElement(jTextField_edit_url.getText());
+        jDialog_edit_url.setVisible(false);
+    }//GEN-LAST:event_jButton_edit_url_aceptarActionPerformed
+
+    private void jMenuItem_menu_lista_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_menu_lista_eliminarActionPerformed
+        // TODO add your handling code here:
+        lista.removeElementAt(jList_url.getSelectedIndex());
+    }//GEN-LAST:event_jMenuItem_menu_lista_eliminarActionPerformed
+
+    private void jButton_edit_url_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_edit_url_cancelarActionPerformed
+        // TODO add your handling code here:
+        jDialog_edit_url.setVisible(false);
+    }//GEN-LAST:event_jButton_edit_url_cancelarActionPerformed
+
+    private void jMenuItem_menu_lista_aniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_menu_lista_aniadirActionPerformed
+        // TODO add your handling code here:
+        jDialog_edit_url.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_menu_lista_aniadirActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog JDialog_Run;
     private javax.swing.JButton buttonConcatenateResults;
@@ -852,6 +1016,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkboxGenerateMatrix;
     private javax.swing.JCheckBox checkboxSaveInFolder;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton_edit_url_aceptar;
+    private javax.swing.JButton jButton_edit_url_cancelar;
     private javax.swing.JButton jButton_restriccion_aceptar;
     private javax.swing.JButton jButton_restriccion_cancelar;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
@@ -861,6 +1027,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBoxScope;
     private javax.swing.JComboBox jComboBox_restriccion_cumplir;
     private javax.swing.JComboBox jComboBox_restriccion_elemento;
+    private javax.swing.JDialog jDialog_edit_url;
     private javax.swing.JDialog jDialog_restriccion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -870,6 +1037,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelErrorLinks;
     private javax.swing.JLabel jLabelSkippedLinks;
     private javax.swing.JLabel jLabelTooDeepLinks;
@@ -877,6 +1045,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_restriccion_cumplirse;
     private javax.swing.JLabel jLabel_restriccion_elemento;
     private javax.swing.JLabel jLabel_restriccion_valor;
+    private javax.swing.JList jList_url;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -885,15 +1054,19 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem jMenuItem_menu_lista_aniadir;
+    private javax.swing.JMenuItem jMenuItem_menu_lista_eliminar;
+    private javax.swing.JMenuItem jMenuItem_menu_lista_modificar;
+    private javax.swing.JPopupMenu jPopupMenu_lista;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPaneRun;
     private javax.swing.JSpinner jSpinnerMaxDepth;
     private javax.swing.JTable jTable_tabla_restricciones;
     private javax.swing.JTextArea jTextAreaRun;
+    private javax.swing.JTextField jTextField_edit_url;
     private javax.swing.JTextField jTextField_restriccion_valor;
     private javax.swing.JToggleButton jToggleButton_restriccion_enlace;
     private javax.swing.JToggleButton jToggleButton_restriccion_pagina;
-    private javax.swing.JTextArea textAreaUrls;
     // End of variables declaration//GEN-END:variables
 }

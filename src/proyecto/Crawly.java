@@ -105,13 +105,12 @@ abstract public class Crawly extends Crawler {
      */
     private void doVisit (Page page) {        
         URL url = page.getURL();
-        String fileName = File.separator + page.getURL()
-                .toString()
-                .replaceAll("http://", "")
-                .replaceAll("[^A-Za-z0-9\\\\/]", "_")
-                .replaceAll("\\\\", File.separator)
-                .replaceAll("/", File.separator)
-                .toLowerCase();
+        String fileName = File.separator + page.getURL().toString();
+        fileName = fileName.replaceAll("http://", "");
+        fileName = fileName.replaceAll("[^A-Za-z0-9\\\\/]", "_");
+        fileName = fileName.replaceAll("\\\\", File.separator);
+        fileName = fileName.replaceAll("/", File.separator);
+        fileName = fileName.toLowerCase();
         
         byte[] bytes = page.getContentBytes();
         String content = page.getContent();
@@ -124,8 +123,7 @@ abstract public class Crawly extends Crawler {
         // Creates the file in the output folder
         if (main.SAVE_FOLDER != null) {
             try {
-                fileName = main.SAVE_FOLDER.getAbsolutePath() + fileName;
-                File file = new File(fileName);
+                File file = new File(main.SAVE_FOLDER.getAbsolutePath() + fileName);
                 FileUtils.writeByteArrayToFile(file, bytes);
             } catch (IOException ex) {
                 Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);

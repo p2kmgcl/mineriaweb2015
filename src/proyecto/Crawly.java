@@ -103,10 +103,16 @@ abstract public class Crawly extends Crawler {
      * Se invoca automáticamente desde doVisit.
      * @param page Page to visit
      */
-    private void doVisit (Page page) {
-        
+    private void doVisit (Page page) {        
         URL url = page.getURL();
-        String fileName = "/" + page.getURL().toString().replaceAll("http://", "");
+        String fileName = File.separator + page.getURL()
+                .toString()
+                .replaceAll("http://", "")
+                .replaceAll("[^A-Za-z0-9\\\\/]", "_")
+                .replaceAll("\\\\", File.separator)
+                .replaceAll("/", File.separator)
+                .toLowerCase();
+        
         byte[] bytes = page.getContentBytes();
         String content = page.getContent();
         
@@ -119,7 +125,6 @@ abstract public class Crawly extends Crawler {
         if (main.SAVE_FOLDER != null) {
             try {
                 fileName = main.SAVE_FOLDER.getAbsolutePath() + fileName;
-                fileName = fileName.replaceAll("[^A-Za-z0-9\\/\\.]", "_");
                 File file = new File(fileName);
                 FileUtils.writeByteArrayToFile(file, bytes);
             } catch (IOException ex) {
@@ -130,7 +135,6 @@ abstract public class Crawly extends Crawler {
         // Appends the text content to a secondary text file
         if (main.SAVE_FILE != null) {
             try {
-                fileName = fileName.replaceAll("[^A-Za-z0-9]", "_").toLowerCase();
                 content = content.replaceAll("[\"]", "'").replaceAll("[\n\r]", " ");
                 FileUtils.writeStringToFile(main.SAVE_FILE, fileName + ", \" " + content + " \"\n", true);
             } catch (IOException ex) {

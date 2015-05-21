@@ -4,10 +4,16 @@
 
 package proyecto;
 
+import java.io.File;
+
 public class main {
     static private MainWindow mainWindow;
     static private Crawly crawly;
     static private Thread crawlyThread;
+    
+    static public File SAVE_FOLDER = null;
+    static public File SAVE_MATRIX = null;
+    static public File SAVE_FILE = null;
     
     /**
      * @param args the command line arguments

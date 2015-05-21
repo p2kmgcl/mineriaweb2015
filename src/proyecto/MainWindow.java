@@ -73,7 +73,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         };
         initComponents();
         tabla =  new Table(data, columnNames);
-        lista = new DefaultListModel<String>();
+        lista = new DefaultListModel<>();
         for(int i = 0; i < urls.length; ++i){
             lista.addElement(urls[i]);
         } 
@@ -238,6 +238,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jButton_edit_url_aceptar = new javax.swing.JButton();
         jButton_edit_url_cancelar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jFileChooser_folder = new javax.swing.JFileChooser();
+        jFileChooser_file = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxScope = new javax.swing.JComboBox();
@@ -539,32 +541,47 @@ abstract public class MainWindow extends javax.swing.JFrame {
             jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog_edit_urlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField_edit_url)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_edit_urlLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(jButton_edit_url_cancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
-                .addComponent(jButton_edit_url_aceptar)
-                .addGap(66, 66, 66))
-            .addGroup(jDialog_edit_urlLayout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jDialog_edit_urlLayout.createSequentialGroup()
+                        .addGroup(jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField_edit_url)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_edit_urlLayout.createSequentialGroup()
+                                .addGap(0, 181, Short.MAX_VALUE)
+                                .addComponent(jButton_edit_url_cancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton_edit_url_aceptar)))
+                        .addContainerGap())))
         );
         jDialog_edit_urlLayout.setVerticalGroup(
             jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog_edit_urlLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_edit_url, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jDialog_edit_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_edit_url_aceptar)
-                    .addComponent(jButton_edit_url_cancelar))
-                .addContainerGap(56, Short.MAX_VALUE))
+                    .addComponent(jButton_edit_url_cancelar)
+                    .addComponent(jButton_edit_url_aceptar))
+                .addContainerGap())
         );
+
+        jFileChooser_folder.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser_folder.setCurrentDirectory(new java.io.File("/tmp"));
+        jFileChooser_folder.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jFileChooser_folder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser_folderActionPerformed(evt);
+            }
+        });
+
+        jFileChooser_file.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser_file.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser_fileActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(440, 740));
@@ -613,7 +630,9 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTable_tabla_restricciones);
-        jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
+        if (jTable_tabla_restricciones.getColumnModel().getColumnCount() > 0) {
+            jTable_tabla_restricciones.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         jButton1.setText("Añadir restricción");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -664,6 +683,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         buttonConcatenateResults.setText("Examinar...");
         buttonConcatenateResults.setEnabled(false);
+        buttonConcatenateResults.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonConcatenateResultsActionPerformed(evt);
+            }
+        });
 
         buttonStartCrawler.setText("Iniciar rastreo");
         buttonStartCrawler.addActionListener(new java.awt.event.ActionListener() {
@@ -815,8 +839,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        jDialog_restriccion.setVisible(true);
+        this.jDialog_restriccion.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jCheckBoxObeyRobotsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxObeyRobotsActionPerformed
@@ -828,7 +851,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_checkboxGenerateMatrixActionPerformed
 
     private void buttonSaveInFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveInFolderActionPerformed
-        // TODO add your handling code here:
+        this.jFileChooser_folder.showDialog(this, null);
     }//GEN-LAST:event_buttonSaveInFolderActionPerformed
 
     private void buttonStartCrawlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonStartCrawlerActionPerformed
@@ -864,10 +887,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
     private void checkboxSaveInFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxSaveInFolderActionPerformed
         this.buttonSaveInFolder.setEnabled(this.checkboxSaveInFolder.isSelected());
+        if (!this.checkboxSaveInFolder.isSelected()) {
+            main.SAVE_FOLDER = null;
+        }
     }//GEN-LAST:event_checkboxSaveInFolderActionPerformed
 
     private void checkboxConcatenateResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxConcatenateResultsActionPerformed
         this.buttonConcatenateResults.setEnabled(this.checkboxConcatenateResults.isSelected());
+        if (!this.checkboxConcatenateResults.isSelected()) {
+            main.SAVE_FILE = null;
+        }
     }//GEN-LAST:event_checkboxConcatenateResultsActionPerformed
        
     private void jComboBox_restriccion_cumplirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_restriccion_cumplirActionPerformed
@@ -887,7 +916,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton_restriccion_enlaceActionPerformed
 
     private void jToggleButton_restriccion_paginaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton_restriccion_paginaActionPerformed
-        // TODO add your handling code here:
         jToggleButton_restriccion_pagina.setSelected(true);
         if(jToggleButton_restriccion_enlace.isSelected() == true){
             jToggleButton_restriccion_enlace.setSelected(false);
@@ -895,19 +923,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton_restriccion_paginaActionPerformed
 
     private void jTextField_restriccion_valorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_restriccion_valorMouseClicked
-        // TODO add your handling code here:
         if(jTextField_restriccion_valor.getText().equals("Introducir expresion regular"))
             jTextField_restriccion_valor.setText("");
     }//GEN-LAST:event_jTextField_restriccion_valorMouseClicked
 
     private void jButton_restriccion_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restriccion_cancelarActionPerformed
-        // TODO add your handling code here:
         jTextField_restriccion_valor.setText("Introducir expresion regular");
         jDialog_restriccion.setVisible(false);
     }//GEN-LAST:event_jButton_restriccion_cancelarActionPerformed
 
     private void jButton_restriccion_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restriccion_aceptarActionPerformed
-        // TODO add your handling code here:
         Restriccion linea_restriccion = null;
         String tipo = " ";
         if(jToggleButton_restriccion_enlace.isSelected() == true){
@@ -1005,6 +1030,18 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jDialog_edit_url.setVisible(true);
     }//GEN-LAST:event_jMenuItem_menu_lista_aniadirActionPerformed
 
+    private void jFileChooser_folderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser_folderActionPerformed
+        main.SAVE_FOLDER = this.jFileChooser_folder.getSelectedFile();
+    }//GEN-LAST:event_jFileChooser_folderActionPerformed
+
+    private void jFileChooser_fileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser_fileActionPerformed
+        main.SAVE_FILE = this.jFileChooser_file.getSelectedFile();
+    }//GEN-LAST:event_jFileChooser_fileActionPerformed
+
+    private void buttonConcatenateResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonConcatenateResultsActionPerformed
+        this.jFileChooser_file.showDialog(this, null);
+    }//GEN-LAST:event_buttonConcatenateResultsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog JDialog_Run;
     private javax.swing.JButton buttonConcatenateResults;
@@ -1030,6 +1067,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox_restriccion_elemento;
     private javax.swing.JDialog jDialog_edit_url;
     private javax.swing.JDialog jDialog_restriccion;
+    private javax.swing.JFileChooser jFileChooser_file;
+    private javax.swing.JFileChooser jFileChooser_folder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

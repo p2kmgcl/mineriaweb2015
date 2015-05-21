@@ -9,7 +9,15 @@ public class CrawlyLinkListener implements LinkListener {
     @Override
     public void crawled(LinkEvent event) {
         String link = event.getLink().getURL().toString();
-        System.out.println(event.getName() + ": " + link);
+        
+        if (event.getName().equals("error")) {
+            System.out.println(">> error");
+            System.out.println(event);
+            System.out.println("<< error");
+        } else {
+            System.out.println(event.getName() + ": " + link);
+        }
+        
         switch (event.getName()) {
             case "visited":
                 main.getMainWindow().incVisitedLinks();

@@ -7,7 +7,6 @@ package proyecto;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
@@ -20,15 +19,9 @@ abstract public class Crawly extends Crawler {
     
     abstract public void log(String log);
     abstract public void clearLog();
-    
-    static final private String OUTPUT_DIR = "output";
-    static final public String OUTPUT_TEXT = "outputText";
-    final public ArrayList<String> extensions;
 
     public Crawly() {
         super();
-        // Initiate array of extensions
-        extensions = new ArrayList<>();
     }
 
     /**
@@ -55,50 +48,54 @@ abstract public class Crawly extends Crawler {
      */
     public void init () {
         // Create output folder
-        try {
-            File targetDirectory = new File(OUTPUT_DIR);
-            if (targetDirectory.exists()) {
-                FileUtils.forceDelete(targetDirectory);
+        if (main.SAVE_FOLDER != null) {
+            try {
+                if (main.SAVE_FOLDER.exists()) {
+                    FileUtils.forceDelete(main.SAVE_FOLDER);
+                }
+                FileUtils.forceMkdir(main.SAVE_FOLDER);
+            } catch (IOException ex) {
+                Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
             }
-            FileUtils.forceMkdir(targetDirectory);
-        } catch (IOException ex) {
-            Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        // Create output file
-        try {
-            File targetFile = new File(OUTPUT_TEXT);
-            if (targetFile.exists()) {
-                FileUtils.forceDelete(targetFile);
+        // Create output file for matrix
+        if (main.SAVE_MATRIX != null) {
+            try {
+                if (main.SAVE_MATRIX.exists()) {
+                    FileUtils.forceDelete(main.SAVE_MATRIX);
+                }
+                FileUtils.writeStringToFile(main.SAVE_MATRIX, "");
+            } catch (IOException ex) {
+                Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
             }
-            FileUtils.writeStringToFile(targetFile, "");
-        } catch (IOException ex) {
-            Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         // Create output arff
-        try {
-            File targetFile = new File(OUTPUT_TEXT + ".arff");
-            if (targetFile.exists()) {
-                FileUtils.forceDelete(targetFile);
+        if (main.SAVE_FILE != null) {
+            try {
+                if (main.SAVE_FILE.exists()) {
+                    FileUtils.forceDelete(main.SAVE_FILE);
+                }
+
+                String header =  "@relation websphinx_crawl_string\n\n";
+                       header += "@attribute document_name string\n";
+                       header += "@attribute document_content string\n\n";
+                       header += "@data\n";
+
+                FileUtils.writeStringToFile(main.SAVE_FILE, header);
+            } catch (IOException ex) {
+                Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            String header =  "@relation departments_string\n\n";
-                   header += "@attribute document_name string\n";
-                   header += "@attribute document_content string\n\n";
-                   header += "@data\n";
-                   
-            FileUtils.writeStringToFile(targetFile, header);
-        } catch (IOException ex) {
-            Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     @Override
     public void run () {
-        System.out.println("-------- Inicio");
+        System.out.println(">> Inicio <<");
+        this.init();
         super.run();
-        System.out.println("-------- Fin");
+        System.out.println(">>   Fin  <<");
     }
 
     /**
@@ -107,59 +104,40 @@ abstract public class Crawly extends Crawler {
      * @param page Page to visit
      */
     private void doVisit (Page page) {
+        
         URL url = page.getURL();
-        String fileName = url.getFile();
+        String fileName = "/" + page.getURL().toString().replaceAll("http://", "");
         byte[] bytes = page.getContentBytes();
-        String html = page.getContent();
-        String text = Jsoup.parse(html).text();
-        String extension = FilenameUtils.getExtension(fileName);
+        String content = page.getContent();
         
-        boolean isText =
-                extension.equals("htm") ||
-                extension.equals("html") ||
-                extension.equals("php") ||
-                extension.equals("asp");
-        
-        if (extensions.indexOf(extension) == -1) {
-            extensions.add(extension);
+        // Add index.html to some files that are not real folders
+        if (FilenameUtils.getExtension(fileName).equals("")) {
+            fileName += "index.html";
         }
-        
-        if (!fileName.endsWith("/") && isText) {            
-            // Add index.html to some files that are not real folders
-            if (FilenameUtils.getExtension(fileName).equals("")) {
-                fileName += "/index.html";
-            }
-            
-            // Creates the file in the output folder
+
+        // Creates the file in the output folder
+        if (main.SAVE_FOLDER != null) {
             try {
-                fileName = OUTPUT_DIR + fileName;
-                fileName = fileName.replaceAll("[^A-Za-z0-9áéíóúÁÉÍÓÚ\n\\/\\. ]", "");
+                fileName = main.SAVE_FOLDER.getAbsolutePath() + fileName;
+                fileName = fileName.replaceAll("[^A-Za-z0-9\\/\\.]", "_");
                 File file = new File(fileName);
                 FileUtils.writeByteArrayToFile(file, bytes);
             } catch (IOException ex) {
                 Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            // Appends the text content to a secondary text file
+        }
+
+        // Appends the text content to a secondary text file
+        if (main.SAVE_FILE != null) {
             try {
-                File file = new File(OUTPUT_TEXT);
-                FileUtils.writeStringToFile(file, text + "\n", true);
-                
-                File fileArff = new File(OUTPUT_TEXT + ".arff");
                 fileName = fileName.replaceAll("[^A-Za-z0-9]", "_").toLowerCase();
-                text = text.replaceAll("[^A-Za-z0-9áéíóúÁÉÍÓÚ ]", "").toLowerCase();
-                String[] textArray = text.split(" ");
-                String result = "";
-                for (String word : textArray) {
-                    if (word.length() >= 3) {
-                        result += word + " ";
-                    }
-                }
-                
-                FileUtils.writeStringToFile(fileArff, fileName + ", \" " + result + " \"\n", true);
+                content = content.replaceAll("[\"]", "'").replaceAll("[\n\r]", " ");
+                FileUtils.writeStringToFile(main.SAVE_FILE, fileName + ", \" " + content + " \"\n", true);
             } catch (IOException ex) {
                 Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        // TODO Create adyacence matrix
     }
 }

@@ -19,7 +19,7 @@ import websphinx.DownloadParameters;
 abstract public class MainWindow extends javax.swing.JFrame {
 
     abstract public void resetCrawler();
-    abstract public void runCrawler();
+    abstract public void runCrawler(ArrayList<Restriccion> restrictions);
     abstract public void stopCrawler();
     abstract public Crawly getCrawler();
     
@@ -34,7 +34,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     String[] columnNames = {"Tipo", "Elemento", "Valor"};
     Table tabla;
     boolean modificar_url;
-
+    
     /**
      * Creates new form MainWindow
      */
@@ -870,7 +870,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         this.log("Configurando crawler");
         this.setCrawlerOptions();
         this.log("Lanzando crawler");
-        this.runCrawler();
+        this.runCrawler(this.restricciones);
         this.buttonToggleCrawler.setText("Pausar");
         this.JDialog_Run.setLocationRelativeTo(this);
         this.JDialog_Run.setModal(true);
@@ -971,7 +971,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         } else {
             this.log("Reanudando rastreo");
             this.buttonToggleCrawler.setText("Pausar");
-            this.runCrawler();
+            this.runCrawler(this.restricciones);
         }
     }//GEN-LAST:event_buttonToggleCrawlerActionPerformed
 

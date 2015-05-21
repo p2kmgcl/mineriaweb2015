@@ -21,7 +21,7 @@ public class CrawlyLinkListener implements LinkListener {
         switch (event.getName()) {
             case "visited":
                 main.getMainWindow().incVisitedLinks();
-                main.getMainWindow().log("Descargado " + link);
+                //main.getMainWindow().log("Descargando " + link);
                 break;
             case "too deep": main.getMainWindow().incTooDeepLinks(); break;
             case "skipped": main.getMainWindow().incSkippedLinks(); break;

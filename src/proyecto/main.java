@@ -5,6 +5,7 @@
 package proyecto;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class main {
     static private MainWindow mainWindow;
@@ -21,11 +22,12 @@ public class main {
     public static void main(String args[]) {
         
         main.mainWindow = new MainWindow() {
-            @Override public void runCrawler() {
+            @Override public void runCrawler(ArrayList<Restriccion> restrictions) {
                 if (main.crawlyThread != null) {
                     main.crawlyThread.interrupt();
                     main.crawlyThread = null;
                 }
+                main.crawly.setRestrictions(restrictions);
                 main.crawlyThread = new Thread(main.crawly);
                 main.crawlyThread.start();
             }

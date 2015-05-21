@@ -15,7 +15,7 @@ public class CrawlyLinkListener implements LinkListener {
             System.out.println(event);
             System.out.println("<< error");
         } else {
-            System.out.println(event.getName() + ": " + link);
+            //System.out.println(event.getName() + ": " + link);
         }
         
         switch (event.getName()) {

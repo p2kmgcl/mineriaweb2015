@@ -112,8 +112,7 @@ abstract public class Crawly extends Crawler {
      */
     private boolean validFile (String url, String content) {
         if (this.restrictions != null) {
-            for (Restriccion restriction : this.restrictions) {
-                
+            for (Restriccion restriction : this.restrictions) {                
                 // Comprobamos si tenemos que buscar en el enlace o en la página
                 String string = "";
                 if (restriction.getTipo() == Restriccion.TIPO_ENLACE) {
@@ -122,19 +121,23 @@ abstract public class Crawly extends Crawler {
                     string = content;
                 }
                 
-                // Obtenemos el valor de búsqueda según el tipo de elemento
-                String valor = restriction.getValor();
-                boolean matches = false;
-                if (restriction.getElemento() == Restriccion.ELEMENTO_TITULO) {
-                    matches = string.matches("<title>" + valor + "</title>");
-                } else if (restriction.getElemento() == Restriccion.ELEMENTO_ETIQUETA) {
-                    // TODO
-                } else if (restriction.getElemento() == Restriccion.ELEMENTO_CONTENIDO) {
-                    matches = string.matches(valor);
+                // Ejecutamos una búsqueda u otra según si es una expresión
+                // regular o no
+                boolean matches;
+                if (restriction.getExpresion()) {
+                    try {
+                        matches = string.matches(restriction.getValor());
+                    } catch (Exception ex) {
+                        main.getMainWindow().log("Error en la expresión " + restriction.getValor());
+                        Logger.getLogger(Crawly.class.getName()).log(Level.SEVERE, null, ex);
+                        return false;
+                    }
+                } else {
+                    matches = string.contains(restriction.getValor());
                 }
                 
                 // Finalmente tomamos una decisión
-                if ((restriction.getCumplir() && !matches) || (matches)) {
+                if ((restriction.getInvertir() && matches) || (!matches)) {
                     return false;
                 }
             }

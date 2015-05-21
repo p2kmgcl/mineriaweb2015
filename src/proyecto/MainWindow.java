@@ -4,6 +4,7 @@
 
 package proyecto;
 
+import java.awt.Color;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -34,6 +35,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
     String[] columnNames = {"Tipo", "Invertir", "RegExp", "Valor"};
     Table tabla;
     boolean modificar_url;
+    Color color_link = new Color(0, 0, 204);
+    Color color_link_visitado = new Color(109, 0, 109);
     
     /**
      * Creates new form MainWindow
@@ -81,6 +84,18 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jTable_tabla_restricciones.setModel(tabla);
         restricciones = new ArrayList<>();
         modificar_url = false;
+    }
+
+    private void inicia_ayuda () {
+        jPanel_ayuda_url.setVisible(false);
+        jPanel_ayuda_opcionesarriba.setVisible(false);
+        //jP_ayuda_ejercicios.setVisible(false);
+        //jP_ayuda_4.setVisible(false);
+        //jP_ayuda_5.setVisible(false);
+        //jP_ayuda_6.setVisible(false);
+        //jP_ayuda_7.setVisible(false);
+        jLabel_ayuda_url.setForeground(color_link);
+        jLabel_ayuda_opciones_arriba.setForeground(color_link);
     }
     
     public void clearLog () {
@@ -247,6 +262,18 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jComboBox_restrictionedit_type = new javax.swing.JComboBox();
         jCheckBox_restrictionedit_invert = new javax.swing.JCheckBox();
+        jFrame_ayuda = new javax.swing.JFrame();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLayeredPane_ayuda = new javax.swing.JLayeredPane();
+        jPanel_ayuda_url = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel_ayuda_opcionesarriba = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel_ayuda_url = new javax.swing.JLabel();
+        jLabel_ayuda_opciones_arriba = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxScope = new javax.swing.JComboBox();
@@ -279,7 +306,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem_quit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem_ayuda = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
 
@@ -390,7 +417,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion_add.setMinimumSize(new java.awt.Dimension(380, 180));
         jDialog_restriccion_add.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         jDialog_restriccion_add.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog_restriccion_add.setPreferredSize(new java.awt.Dimension(380, 180));
         jDialog_restriccion_add.setResizable(false);
 
         jButton_restriccion_aceptar.setText("Añadir");
@@ -577,7 +603,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion_edit.setMinimumSize(new java.awt.Dimension(380, 180));
         jDialog_restriccion_edit.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         jDialog_restriccion_edit.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog_restriccion_edit.setPreferredSize(new java.awt.Dimension(380, 180));
         jDialog_restriccion_edit.setResizable(false);
 
         jButton_restriccionedit_aceptar.setText("Modificar");
@@ -666,6 +691,155 @@ abstract public class MainWindow extends javax.swing.JFrame {
                             .addComponent(jButton_restriccionedit_cancelar)
                             .addComponent(jButton_restriccionedit_aceptar))
                         .addContainerGap())))
+        );
+
+        jFrame_ayuda.setMinimumSize(new java.awt.Dimension(600, 350));
+        jFrame_ayuda.setPreferredSize(new java.awt.Dimension(600, 350));
+        jFrame_ayuda.setResizable(false);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Bienvenido a la ayuda");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(116, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel_ayuda_url.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel17.setText("informacion sobre las urls");
+
+        javax.swing.GroupLayout jPanel_ayuda_urlLayout = new javax.swing.GroupLayout(jPanel_ayuda_url);
+        jPanel_ayuda_url.setLayout(jPanel_ayuda_urlLayout);
+        jPanel_ayuda_urlLayout.setHorizontalGroup(
+            jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(155, Short.MAX_VALUE))
+        );
+        jPanel_ayuda_urlLayout.setVerticalGroup(
+            jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel17)
+                .addContainerGap(220, Short.MAX_VALUE))
+        );
+
+        jLayeredPane_ayuda.add(jPanel_ayuda_url);
+        jPanel_ayuda_url.setBounds(0, 0, 470, 250);
+
+        jPanel_ayuda_opcionesarriba.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel18.setText("Informacion sobre las opciones superiores");
+
+        javax.swing.GroupLayout jPanel_ayuda_opcionesarribaLayout = new javax.swing.GroupLayout(jPanel_ayuda_opcionesarriba);
+        jPanel_ayuda_opcionesarriba.setLayout(jPanel_ayuda_opcionesarribaLayout);
+        jPanel_ayuda_opcionesarribaLayout.setHorizontalGroup(
+            jPanel_ayuda_opcionesarribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_opcionesarribaLayout.createSequentialGroup()
+                .addGap(122, 122, 122)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+        jPanel_ayuda_opcionesarribaLayout.setVerticalGroup(
+            jPanel_ayuda_opcionesarribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_opcionesarribaLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel18)
+                .addContainerGap(195, Short.MAX_VALUE))
+        );
+
+        jLayeredPane_ayuda.add(jPanel_ayuda_opcionesarriba);
+        jPanel_ayuda_opcionesarriba.setBounds(0, 0, 470, 250);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setText("Contenido:");
+
+        jLabel_ayuda_url.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel_ayuda_url.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel_ayuda_url.setText("<html><span style=\"text-decoration: underline;\">1. Urls</span></html>");
+        jLabel_ayuda_url.setToolTipText("");
+        jLabel_ayuda_url.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_ayuda_url.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_ayuda_urlMouseClicked(evt);
+            }
+        });
+
+        jLabel_ayuda_opciones_arriba.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel_ayuda_opciones_arriba.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel_ayuda_opciones_arriba.setText("<html><span style=\"text-decoration: underline;\">2. Opciones Superiores</span></html>");
+        jLabel_ayuda_opciones_arriba.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_ayuda_opciones_arriba.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_ayuda_opciones_arribaMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_ayuda_url)
+                    .addComponent(jLabel_ayuda_opciones_arriba))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ayuda_url, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ayuda_opciones_arriba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(240, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jFrame_ayudaLayout = new javax.swing.GroupLayout(jFrame_ayuda.getContentPane());
+        jFrame_ayuda.getContentPane().setLayout(jFrame_ayudaLayout);
+        jFrame_ayudaLayout.setHorizontalGroup(
+            jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame_ayudaLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLayeredPane_ayuda, javax.swing.GroupLayout.Alignment.TRAILING)))
+        );
+        jFrame_ayudaLayout.setVerticalGroup(
+            jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame_ayudaLayout.createSequentialGroup()
+                .addGroup(jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jFrame_ayudaLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLayeredPane_ayuda))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -850,9 +1024,14 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         jMenu2.setText("Ayuda");
 
-        jCheckBoxMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
-        jCheckBoxMenuItem1.setText("Mostrar ayuda");
-        jMenu2.add(jCheckBoxMenuItem1);
+        jMenuItem_ayuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_ayuda.setText("Mostrar ayuda");
+        jMenuItem_ayuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ayudaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem_ayuda);
 
         jMenuItem4.setText("Licencia");
         jMenu2.add(jMenuItem4);
@@ -1147,6 +1326,29 @@ abstract public class MainWindow extends javax.swing.JFrame {
         this.jFileChooser_file.showDialog(this, null);
     }//GEN-LAST:event_buttonConcatenateResultsActionPerformed
 
+    private void jMenuItem_ayudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ayudaActionPerformed
+        // TODO add your handling code here:
+        inicia_ayuda();
+        jFrame_ayuda.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_ayudaActionPerformed
+
+    private void jLabel_ayuda_urlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_ayuda_urlMouseClicked
+        // TODO add your handling code here:
+        inicia_ayuda();
+        System.out.println();
+        jPanel_ayuda_url.setVisible(true);
+        jLabel_ayuda_url.setForeground(color_link_visitado);
+        jLayeredPane_ayuda.moveToFront(jPanel_ayuda_url);
+    }//GEN-LAST:event_jLabel_ayuda_urlMouseClicked
+
+    private void jLabel_ayuda_opciones_arribaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_ayuda_opciones_arribaMouseClicked
+        // TODO add your handling code here:
+        inicia_ayuda();
+        jPanel_ayuda_opcionesarriba.setVisible(true);
+        jLabel_ayuda_opciones_arriba.setForeground(color_link_visitado);
+        jLayeredPane_ayuda.moveToFront(jPanel_ayuda_opcionesarriba);
+    }//GEN-LAST:event_jLabel_ayuda_opciones_arribaMouseClicked
+
     private void jTextField_restriction_valueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_restriction_valueActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_restriction_valueActionPerformed
@@ -1243,7 +1445,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton_restriccion_cancelar;
     private javax.swing.JButton jButton_restriccionedit_aceptar;
     private javax.swing.JButton jButton_restriccionedit_cancelar;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBox jCheckBoxObeyRobots;
     private javax.swing.JCheckBox jCheckBox_restriction_invert;
     private javax.swing.JCheckBox jCheckBox_restriction_regexp;
@@ -1259,6 +1460,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog_restriccion_edit;
     private javax.swing.JFileChooser jFileChooser_file;
     private javax.swing.JFileChooser jFileChooser_folder;
+    private javax.swing.JFrame jFrame_ayuda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1266,6 +1468,10 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1278,16 +1484,24 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSkippedLinks;
     private javax.swing.JLabel jLabelTooDeepLinks;
     private javax.swing.JLabel jLabelVisitedLinks;
+    private javax.swing.JLabel jLabel_ayuda_opciones_arriba;
+    private javax.swing.JLabel jLabel_ayuda_url;
+    private javax.swing.JLayeredPane jLayeredPane_ayuda;
     private javax.swing.JList jList_url;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem_ayuda;
     private javax.swing.JMenuItem jMenuItem_menu_lista_aniadir;
     private javax.swing.JMenuItem jMenuItem_menu_lista_eliminar;
     private javax.swing.JMenuItem jMenuItem_menu_lista_modificar;
     private javax.swing.JMenuItem jMenuItem_quit;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel_ayuda_opcionesarriba;
+    private javax.swing.JPanel jPanel_ayuda_url;
     private javax.swing.JPopupMenu jPopupMenu_lista;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

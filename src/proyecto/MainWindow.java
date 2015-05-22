@@ -87,15 +87,20 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }
 
     private void inicia_ayuda () {
+        // Paneles
         jPanel_ayuda_url.setVisible(false);
         jPanel_ayuda_opcionesarriba.setVisible(false);
-        //jP_ayuda_ejercicios.setVisible(false);
-        //jP_ayuda_4.setVisible(false);
-        //jP_ayuda_5.setVisible(false);
-        //jP_ayuda_6.setVisible(false);
-        //jP_ayuda_7.setVisible(false);
+        jPanel_ayuda_restricciones.setVisible(false);
+        jPanel_ayuda_restricciones_insertar.setVisible(false);
+        jPanel_ayuda_opcionesabajo.setVisible(false);
+        jPanel_ayuda_errores.setVisible(false);
+        // enlaces
         jLabel_ayuda_url.setForeground(color_link);
         jLabel_ayuda_opciones_arriba.setForeground(color_link);
+        jLabel_ayuda_restricciones.setForeground(color_link);
+        jLabel_ayuda_restricciones_insertar.setForeground(color_link);
+        jLabel_ayuda_opciones_abajo.setForeground(color_link);
+        jLabel_ayuda_errores.setForeground(color_link);
     }
     
     public void clearLog () {
@@ -268,12 +273,56 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLayeredPane_ayuda = new javax.swing.JLayeredPane();
         jPanel_ayuda_url = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel_ayuda_opcionesarriba = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jPanel_ayuda_restricciones = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jPanel_ayuda_restricciones_insertar = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jPanel_ayuda_opcionesabajo = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jPanel_ayuda_errores = new javax.swing.JPanel();
+        jLabel46 = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
+        jLabel50 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel_ayuda_url = new javax.swing.JLabel();
         jLabel_ayuda_opciones_arriba = new javax.swing.JLabel();
+        jLabel_ayuda_restricciones = new javax.swing.JLabel();
+        jLabel_ayuda_opciones_abajo = new javax.swing.JLabel();
+        jLabel_ayuda_errores = new javax.swing.JLabel();
+        jLabel_ayuda_restricciones_insertar = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxScope = new javax.swing.JComboBox();
@@ -297,9 +346,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jList_url = new javax.swing.JList();
         jButton_editRestriction = new javax.swing.JButton();
         jButton_deleteRestriction = new javax.swing.JButton();
-        jButton_deleteURL = new javax.swing.JButton();
-        jButton_addURL = new javax.swing.JButton();
-        jButton_editURL = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -414,9 +460,10 @@ abstract public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jDialog_restriccion_add.setMinimumSize(new java.awt.Dimension(380, 180));
+        jDialog_restriccion_add.setMinimumSize(new java.awt.Dimension(380, 190));
         jDialog_restriccion_add.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         jDialog_restriccion_add.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog_restriccion_add.setPreferredSize(new java.awt.Dimension(307, 190));
         jDialog_restriccion_add.setResizable(false);
 
         jButton_restriccion_aceptar.setText("Añadir");
@@ -585,7 +632,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         );
 
         jFileChooser_folder.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        jFileChooser_folder.setCurrentDirectory(new java.io.File("/tmp"));
+        jFileChooser_folder.setCurrentDirectory(new java.io.File("C:\\tmp"));
         jFileChooser_folder.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         jFileChooser_folder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -693,8 +740,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
                         .addContainerGap())))
         );
 
-        jFrame_ayuda.setMinimumSize(new java.awt.Dimension(600, 350));
-        jFrame_ayuda.setPreferredSize(new java.awt.Dimension(600, 350));
+        jFrame_ayuda.setMinimumSize(new java.awt.Dimension(670, 405));
+        jFrame_ayuda.setPreferredSize(new java.awt.Dimension(670, 405));
         jFrame_ayuda.setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -722,7 +769,20 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         jPanel_ayuda_url.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel17.setText("informacion sobre las urls");
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel17.setText("En la lista introduzca las ulrs a las que quiera aplicarle el Crawler,");
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel20.setText("si quiere modificar, añadir o eliminar cualquier url pulse el boton derecho ");
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel21.setText("del raton, para que le aparezca el submenu con las correspondientes ");
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel22.setText("opciones.");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/submenu_ayuda.jpg"))); // NOI18N
+        jButton1.setBorderPainted(false);
 
         javax.swing.GroupLayout jPanel_ayuda_urlLayout = new javax.swing.GroupLayout(jPanel_ayuda_url);
         jPanel_ayuda_url.setLayout(jPanel_ayuda_urlLayout);
@@ -730,43 +790,348 @@ abstract public class MainWindow extends javax.swing.JFrame {
             jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
                 .addGap(55, 55, 55)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addGroup(jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
+                        .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)))
+            .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel_ayuda_urlLayout.setVerticalGroup(
             jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel17)
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 65, Short.MAX_VALUE))
         );
 
         jLayeredPane_ayuda.add(jPanel_ayuda_url);
-        jPanel_ayuda_url.setBounds(0, 0, 470, 250);
+        jPanel_ayuda_url.setBounds(0, 0, 470, 320);
 
         jPanel_ayuda_opcionesarriba.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jLabel18.setText("Informacion sobre las opciones superiores");
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel23.setText("Opciones superiores:");
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel24.setText("    1. Alcance: Indica si el crawler tiene que visitar las paginas que cuelguen");
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel25.setText("    de un servidor, del mismo subarbol o toda la web");
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel26.setText("    2. Limite de saltos: Establece la profundidad de busqueda, 0 solo los enlaces");
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel27.setText("    de esa pagina, 1 los enlaces de los enlaces, etc. Notese que consumira más");
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel28.setText("    memoria cuanta más profundidad establezca.");
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel29.setText("    3. Tipo de exploración: indica si queremos que recorra niveles o se introduzca");
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel30.setText("     hasta que llegue el final en profundidad.");
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel31.setText("    4. Enlaces: indica que queremos descargar, html, html e imagenes o todo.");
 
         javax.swing.GroupLayout jPanel_ayuda_opcionesarribaLayout = new javax.swing.GroupLayout(jPanel_ayuda_opcionesarriba);
         jPanel_ayuda_opcionesarriba.setLayout(jPanel_ayuda_opcionesarribaLayout);
         jPanel_ayuda_opcionesarribaLayout.setHorizontalGroup(
             jPanel_ayuda_opcionesarribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_ayuda_opcionesarribaLayout.createSequentialGroup()
-                .addGap(122, 122, 122)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel_ayuda_opcionesarribaLayout.setVerticalGroup(
             jPanel_ayuda_opcionesarribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ayuda_opcionesarribaLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel18)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jLayeredPane_ayuda.add(jPanel_ayuda_opcionesarriba);
-        jPanel_ayuda_opcionesarriba.setBounds(0, 0, 470, 250);
+        jPanel_ayuda_opcionesarriba.setBounds(0, 0, 470, 320);
+
+        jPanel_ayuda_restricciones.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/tabla_restricciones.jpg"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel18.setText("Esta es la tabla de restricciones en la cual se muestran los valores de las");
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel32.setText("restricciones actuales, si queremos eliminar o modificar una restriccion, clickamos ");
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel33.setText("sobre la fila y pinchamos sobre la opción que queremos aplicar.");
+
+        javax.swing.GroupLayout jPanel_ayuda_restriccionesLayout = new javax.swing.GroupLayout(jPanel_ayuda_restricciones);
+        jPanel_ayuda_restricciones.setLayout(jPanel_ayuda_restriccionesLayout);
+        jPanel_ayuda_restriccionesLayout.setHorizontalGroup(
+            jPanel_ayuda_restriccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_restriccionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_ayuda_restriccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(jPanel_ayuda_restriccionesLayout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel_ayuda_restriccionesLayout.setVerticalGroup(
+            jPanel_ayuda_restriccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_restriccionesLayout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel33)
+                .addGap(0, 62, Short.MAX_VALUE))
+        );
+
+        jLayeredPane_ayuda.add(jPanel_ayuda_restricciones);
+        jPanel_ayuda_restricciones.setBounds(0, 0, 470, 320);
+
+        jPanel_ayuda_restricciones_insertar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto/aniadir_restriccion.jpg"))); // NOI18N
+        jButton3.setBorderPainted(false);
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel34.setText("Como podemos ver en las restricciones tenemos:");
+
+        jLabel35.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel35.setText("1. Valor: colocamos una cadena de caracteres.");
+
+        jLabel36.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel36.setText("2. Tipo: enlace si queremos que se lo aplique a la url, o página para el contenido");
+
+        jLabel37.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel37.setText("3. Tratar como expresión regular: si no lo marcamos buscara la cadena");
+
+        jLabel38.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel38.setText("establecida en valor, sino sera una expresión regular.");
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel39.setText("4. Invertir restricción: sirve para que solo de descargue las que tengan valor o al ");
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel40.setText("revés.");
+
+        javax.swing.GroupLayout jPanel_ayuda_restricciones_insertarLayout = new javax.swing.GroupLayout(jPanel_ayuda_restricciones_insertar);
+        jPanel_ayuda_restricciones_insertar.setLayout(jPanel_ayuda_restricciones_insertarLayout);
+        jPanel_ayuda_restricciones_insertarLayout.setHorizontalGroup(
+            jPanel_ayuda_restricciones_insertarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_restricciones_insertarLayout.createSequentialGroup()
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel_ayuda_restricciones_insertarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_ayuda_restricciones_insertarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_ayuda_restricciones_insertarLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel_ayuda_restricciones_insertarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel37)
+                            .addGroup(jPanel_ayuda_restricciones_insertarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel36, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel39)
+                            .addGroup(jPanel_ayuda_restricciones_insertarLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel_ayuda_restricciones_insertarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel38)
+                                    .addComponent(jLabel40))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel_ayuda_restricciones_insertarLayout.setVerticalGroup(
+            jPanel_ayuda_restricciones_insertarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_restricciones_insertarLayout.createSequentialGroup()
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel34)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel40)
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        jLayeredPane_ayuda.add(jPanel_ayuda_restricciones_insertar);
+        jPanel_ayuda_restricciones_insertar.setBounds(0, 0, 470, 320);
+
+        jPanel_ayuda_opcionesabajo.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel41.setText("Opciones inferiores:");
+
+        jLabel42.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel42.setText("1. Obedecer ficheros robots.txt: si esta opción esta marcada respetara los ");
+
+        jLabel43.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel43.setText("ficheros.");
+
+        jLabel44.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel44.setText("2. Guardar en carpeta: selecciona una carpeta para guardar los ficheros que se ");
+
+        jLabel45.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel45.setText("descargue.");
+
+        jLabel47.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel47.setText("3. Generar matriz de adyacencia: para generar la matriz y guardarla en un fichero.");
+
+        jLabel49.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel49.setText("4. Concatenar ficheros: para unir todos los string en un fichero .arff.");
+
+        javax.swing.GroupLayout jPanel_ayuda_opcionesabajoLayout = new javax.swing.GroupLayout(jPanel_ayuda_opcionesabajo);
+        jPanel_ayuda_opcionesabajo.setLayout(jPanel_ayuda_opcionesabajoLayout);
+        jPanel_ayuda_opcionesabajoLayout.setHorizontalGroup(
+            jPanel_ayuda_opcionesabajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel_ayuda_opcionesabajoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_ayuda_opcionesabajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel44)
+                    .addGroup(jPanel_ayuda_opcionesabajoLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel_ayuda_opcionesabajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel43)
+                            .addComponent(jLabel45)))
+                    .addComponent(jLabel47)
+                    .addComponent(jLabel49))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+        jPanel_ayuda_opcionesabajoLayout.setVerticalGroup(
+            jPanel_ayuda_opcionesabajoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_opcionesabajoLayout.createSequentialGroup()
+                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
+        );
+
+        jLayeredPane_ayuda.add(jPanel_ayuda_opcionesabajo);
+        jPanel_ayuda_opcionesabajo.setBounds(0, 0, 470, 320);
+
+        jPanel_ayuda_errores.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabel46.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel46.setText("Errores");
+
+        jLabel48.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel48.setText("El principal error es que la libreria Crawler consume mucha memoria, y puede ser ");
+
+        jLabel50.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel50.setText("que el Crawler produzca un error de memoria, es decir, que se quede sin ");
+
+        jLabel51.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel51.setText("memoria. Si esto le ha sucedido por favor entre en este link:");
+
+        jTextField1.setEditable(false);
+        jTextField1.setText("jTextField1");
+
+        javax.swing.GroupLayout jPanel_ayuda_erroresLayout = new javax.swing.GroupLayout(jPanel_ayuda_errores);
+        jPanel_ayuda_errores.setLayout(jPanel_ayuda_erroresLayout);
+        jPanel_ayuda_erroresLayout.setHorizontalGroup(
+            jPanel_ayuda_erroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
+                .addGroup(jPanel_ayuda_erroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel48))
+                    .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel51))
+                    .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
+                        .addGap(211, 211, 211)
+                        .addComponent(jLabel46))
+                    .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel_ayuda_erroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel50, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        jPanel_ayuda_erroresLayout.setVerticalGroup(
+            jPanel_ayuda_erroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
+                .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(149, Short.MAX_VALUE))
+        );
+
+        jLayeredPane_ayuda.add(jPanel_ayuda_errores);
+        jPanel_ayuda_errores.setBounds(0, 0, 470, 320);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -794,17 +1159,71 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel_ayuda_restricciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel_ayuda_restricciones.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel_ayuda_restricciones.setText("<html><span style=\"text-decoration: underline;\">3. Restricciones</span></html>");
+        jLabel_ayuda_restricciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_ayuda_restricciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_ayuda_restriccionesMouseClicked(evt);
+            }
+        });
+
+        jLabel_ayuda_opciones_abajo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel_ayuda_opciones_abajo.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel_ayuda_opciones_abajo.setText("<html><span style=\"text-decoration: underline;\">4. Opciones Inferiores</span></html>");
+        jLabel_ayuda_opciones_abajo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_ayuda_opciones_abajo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_ayuda_opciones_abajoMouseClicked(evt);
+            }
+        });
+
+        jLabel_ayuda_errores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel_ayuda_errores.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel_ayuda_errores.setText("<html><span style=\"text-decoration: underline;\">5. Errores</span></html>");
+        jLabel_ayuda_errores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_ayuda_errores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_ayuda_erroresMouseClicked(evt);
+            }
+        });
+
+        jLabel_ayuda_restricciones_insertar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel_ayuda_restricciones_insertar.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel_ayuda_restricciones_insertar.setText("<html><span style=\"text-decoration: underline;\">3.1. Insertar o modificar</span></html>");
+        jLabel_ayuda_restricciones_insertar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_ayuda_restricciones_insertar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_ayuda_restricciones_insertarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel_ayuda_url)
-                    .addComponent(jLabel_ayuda_opciones_arriba))
-                .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_ayuda_url)
+                            .addComponent(jLabel_ayuda_opciones_arriba)
+                            .addComponent(jLabel_ayuda_opciones_abajo)
+                            .addComponent(jLabel_ayuda_errores))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel_ayuda_restricciones)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 12, Short.MAX_VALUE)
+                                .addComponent(jLabel_ayuda_restricciones_insertar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(17, 17, 17))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel19)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -815,7 +1234,15 @@ abstract public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jLabel_ayuda_url, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel_ayuda_opciones_arriba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ayuda_restricciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ayuda_restricciones_insertar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ayuda_opciones_abajo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel_ayuda_errores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jFrame_ayudaLayout = new javax.swing.GroupLayout(jFrame_ayuda.getContentPane());
@@ -823,8 +1250,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jFrame_ayudaLayout.setHorizontalGroup(
             jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame_ayudaLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -833,13 +1259,10 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jFrame_ayudaLayout.setVerticalGroup(
             jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrame_ayudaLayout.createSequentialGroup()
-                .addGroup(jFrame_ayudaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jFrame_ayudaLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLayeredPane_ayuda))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLayeredPane_ayuda))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -957,11 +1380,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jList_url.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "1", "2", "3" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jList_url.setName(""); // NOI18N
         jList_url.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -984,27 +1402,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton_deleteURL.setText("Eliminar");
-        jButton_deleteURL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_deleteURLActionPerformed(evt);
-            }
-        });
-
-        jButton_addURL.setText("Añadir");
-        jButton_addURL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_addURLActionPerformed(evt);
-            }
-        });
-
-        jButton_editURL.setText("Modificar");
-        jButton_editURL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_editURLActionPerformed(evt);
-            }
-        });
-
         jLabel12.setText("Lista de URLS:");
 
         jLabel13.setText("Restricciones de acceso:");
@@ -1024,7 +1421,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         jMenu2.setText("Ayuda");
 
-        jMenuItem_ayuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_ayuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem_ayuda.setText("Mostrar ayuda");
         jMenuItem_ayuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1079,13 +1476,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
                         .addComponent(checkboxConcatenateResults)
                         .addGap(68, 68, 68)
                         .addComponent(buttonConcatenateResults, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton_deleteURL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_editURL)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_addURL, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1106,16 +1496,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(13, 13, 13)
+                .addContainerGap()
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_addURL)
-                    .addComponent(jButton_editURL)
-                    .addComponent(jButton_deleteURL))
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jComboBoxScope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1269,13 +1654,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
     private void jList_urlMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_urlMouseClicked
         // TODO add your handling code here:
+        jList_url.setSelectedIndex(jList_url.locationToIndex(evt.getPoint()));
         if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3 && jList_url.getSelectedIndex() != -1){
-            jMenuItem_menu_lista_modificar.setVisible(true);
-            jMenuItem_menu_lista_eliminar.setVisible(true);
-            jPopupMenu_lista.show(evt.getComponent(), evt.getX(), evt.getY());
-        }else if(evt.getButton() == java.awt.event.MouseEvent.BUTTON3 && jList_url.getSelectedIndex() == -1){
-            jMenuItem_menu_lista_modificar.setVisible(false);
-            jMenuItem_menu_lista_eliminar.setVisible(false);
             jPopupMenu_lista.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_jList_urlMouseClicked
@@ -1378,18 +1758,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_deleteRestrictionActionPerformed
 
-    private void jButton_deleteURLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_deleteURLActionPerformed
-        this.jMenuItem_menu_lista_eliminarActionPerformed(evt);
-    }//GEN-LAST:event_jButton_deleteURLActionPerformed
-
-    private void jButton_addURLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_addURLActionPerformed
-        this.jMenuItem_menu_lista_aniadirActionPerformed(evt);
-    }//GEN-LAST:event_jButton_addURLActionPerformed
-
-    private void jButton_editURLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_editURLActionPerformed
-        this.jMenuItem_menu_lista_modificarActionPerformed(evt);
-    }//GEN-LAST:event_jButton_editURLActionPerformed
-
     private void jButton_restriccionedit_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_restriccionedit_aceptarActionPerformed
         int selectedRow = jTable_tabla_restricciones.getSelectedRow();
         Restriccion restriction = restricciones.get(selectedRow);
@@ -1419,8 +1787,40 @@ abstract public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox_restrictionedit_regexpActionPerformed
 
     private void jMenuItem_quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_quitActionPerformed
-        this.dispose();
+        System.exit(-1);
     }//GEN-LAST:event_jMenuItem_quitActionPerformed
+
+    private void jLabel_ayuda_restriccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_ayuda_restriccionesMouseClicked
+        // TODO add your handling code here:
+        inicia_ayuda();
+        jPanel_ayuda_restricciones.setVisible(true);
+        jLabel_ayuda_restricciones.setForeground(color_link_visitado);
+        jLayeredPane_ayuda.moveToFront(jPanel_ayuda_restricciones);
+    }//GEN-LAST:event_jLabel_ayuda_restriccionesMouseClicked
+
+    private void jLabel_ayuda_opciones_abajoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_ayuda_opciones_abajoMouseClicked
+        // TODO add your handling code here:
+        inicia_ayuda();
+        jPanel_ayuda_opcionesabajo.setVisible(true);
+        jLabel_ayuda_opciones_abajo.setForeground(color_link_visitado);
+        jLayeredPane_ayuda.moveToFront(jPanel_ayuda_opcionesabajo);
+    }//GEN-LAST:event_jLabel_ayuda_opciones_abajoMouseClicked
+
+    private void jLabel_ayuda_erroresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_ayuda_erroresMouseClicked
+        // TODO add your handling code here:
+        inicia_ayuda();
+        jPanel_ayuda_errores.setVisible(true);
+        jLabel_ayuda_errores.setForeground(color_link_visitado);
+        jLayeredPane_ayuda.moveToFront(jPanel_ayuda_errores);
+    }//GEN-LAST:event_jLabel_ayuda_erroresMouseClicked
+
+    private void jLabel_ayuda_restricciones_insertarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_ayuda_restricciones_insertarMouseClicked
+        // TODO add your handling code here:
+        inicia_ayuda();
+        jPanel_ayuda_restricciones_insertar.setVisible(true);
+        jLabel_ayuda_restricciones_insertar.setForeground(color_link_visitado);
+        jLayeredPane_ayuda.moveToFront(jPanel_ayuda_restricciones_insertar);
+    }//GEN-LAST:event_jLabel_ayuda_restricciones_insertarMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog JDialog_Run;
@@ -1433,12 +1833,12 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkboxConcatenateResults;
     private javax.swing.JCheckBox checkboxGenerateMatrix;
     private javax.swing.JCheckBox checkboxSaveInFolder;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton_addRestriction;
-    private javax.swing.JButton jButton_addURL;
     private javax.swing.JButton jButton_deleteRestriction;
-    private javax.swing.JButton jButton_deleteURL;
     private javax.swing.JButton jButton_editRestriction;
-    private javax.swing.JButton jButton_editURL;
     private javax.swing.JButton jButton_edit_url_aceptar;
     private javax.swing.JButton jButton_edit_url_cancelar;
     private javax.swing.JButton jButton_restriccion_aceptar;
@@ -1473,9 +1873,41 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1484,7 +1916,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSkippedLinks;
     private javax.swing.JLabel jLabelTooDeepLinks;
     private javax.swing.JLabel jLabelVisitedLinks;
+    private javax.swing.JLabel jLabel_ayuda_errores;
+    private javax.swing.JLabel jLabel_ayuda_opciones_abajo;
     private javax.swing.JLabel jLabel_ayuda_opciones_arriba;
+    private javax.swing.JLabel jLabel_ayuda_restricciones;
+    private javax.swing.JLabel jLabel_ayuda_restricciones_insertar;
     private javax.swing.JLabel jLabel_ayuda_url;
     private javax.swing.JLayeredPane jLayeredPane_ayuda;
     private javax.swing.JList jList_url;
@@ -1500,7 +1936,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_quit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel_ayuda_errores;
+    private javax.swing.JPanel jPanel_ayuda_opcionesabajo;
     private javax.swing.JPanel jPanel_ayuda_opcionesarriba;
+    private javax.swing.JPanel jPanel_ayuda_restricciones;
+    private javax.swing.JPanel jPanel_ayuda_restricciones_insertar;
     private javax.swing.JPanel jPanel_ayuda_url;
     private javax.swing.JPopupMenu jPopupMenu_lista;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1509,6 +1949,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinnerMaxDepth;
     private javax.swing.JTable jTable_tabla_restricciones;
     private javax.swing.JTextArea jTextAreaRun;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField_edit_url;
     private javax.swing.JTextField jTextField_restriction_value;
     private javax.swing.JTextField jTextField_restrictionedit_value;

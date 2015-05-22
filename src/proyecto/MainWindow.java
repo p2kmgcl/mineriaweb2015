@@ -29,6 +29,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private int visitedLinks = 0; // Enlaces visitados
     private int errorLinks = 0; // Visitas fallidas (404, 403...)
 
+    private Lanzar_Sparky lanzado;
     private final ArrayList<Restriccion> restricciones;
     Object[][] data;
     DefaultListModel<String> lista;
@@ -75,6 +76,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
            "http://www.theatre.ccsu.edu/"
         };
         initComponents();
+        lanzado = new Lanzar_Sparky(urls);
         tabla =  new Table(data, columnNames);
         lista = new DefaultListModel<>();
         for(int i = 0; i < urls.length; ++i){
@@ -154,30 +156,36 @@ abstract public class MainWindow extends javax.swing.JFrame {
             case 0:
                 this.log("Alcance: Subarbol");
                 this.getCrawler().setDomain(Crawler.SUBTREE);
+                lanzado.sparky.setDomain(Crawler.SUBTREE);
                 break;
             case 1:
                 this.log("Alcance: Servidor");
                 this.getCrawler().setDomain(Crawler.SERVER);
+                lanzado.sparky.setDomain(Crawler.SERVER);
                 break;
             case 2:
                 this.log("Alcance: Web");
                 this.getCrawler().setDomain(Crawler.WEB);
+                lanzado.sparky.setDomain(Crawler.WEB);
                 break;
         }
         
         // Límite de saltos
         this.log("Límite de saltos: " + (int) this.jSpinnerMaxDepth.getValue());
         this.getCrawler().setMaxDepth((int) this.jSpinnerMaxDepth.getValue());
-    
+        lanzado.sparky.setMaxDepth((int) this.jSpinnerMaxDepth.getValue());
+        
         // Tipo de exploración
         switch (this.jComboBoxExplorationType.getSelectedIndex()) {
             case 0:
                 this.log("Exploración por anchura");
                 this.getCrawler().setDepthFirst(false);
+                lanzado.sparky.setDepthFirst(false);
                 break;
             case 1:
                 this.log("Exploración por profundidad");
                 this.getCrawler().setDepthFirst(true);
+                lanzado.sparky.setDepthFirst(true);
                 break;
         }
         
@@ -186,14 +194,17 @@ abstract public class MainWindow extends javax.swing.JFrame {
             case 0:
                 this.log("Exploración de hiperenlaces");
                 this.getCrawler().setLinkType(Crawler.HYPERLINKS);
+                lanzado.sparky.setLinkType(Crawler.HYPERLINKS);
                 break;
             case 1:
                 this.log("Exploración de hiperenlaces e imágenes");
                 this.getCrawler().setLinkType(Crawler.HYPERLINKS_AND_IMAGES);
+                lanzado.sparky.setLinkType(Crawler.HYPERLINKS_AND_IMAGES);
                 break;
             case 2:
                 this.log("Exploración completa");
                 this.getCrawler().setLinkType(Crawler.ALL_LINKS);
+                lanzado.sparky.setLinkType(Crawler.ALL_LINKS);
                 break;
         }
         
@@ -210,9 +221,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
         }
         downloadParameters.changeUserAgent("ChupiCrawler Mozilla/5.0 (X11; U; Linux x86_64;");
         this.getCrawler().setDownloadParameters(downloadParameters);
+        lanzado.sparky.setDownloadParameters(downloadParameters);
     }
     
     public void crawlerEnd () {
+        this.log("Calculando matriz de adyacencia");
+        if(main.SAVE_MATRIX != null){
+            String urls[] = new String[lista.getSize()];
+            lista.copyInto(urls);
+            lanzado.start();
+        }
         this.buttonToggleCrawler.setVisible(false);
         this.buttonStopCrawler.setText("Cerrar log");
     }
@@ -258,6 +276,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jFileChooser_folder = new javax.swing.JFileChooser();
         jFileChooser_file = new javax.swing.JFileChooser();
+        jFileChooser_matrix = new javax.swing.JFileChooser();
         jDialog_restriccion_edit = new javax.swing.JDialog();
         jButton_restriccionedit_aceptar = new javax.swing.JButton();
         jButton_restriccionedit_cancelar = new javax.swing.JButton();
@@ -315,6 +334,9 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLabel50 = new javax.swing.JLabel();
         jLabel51 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel_ayuda_url = new javax.swing.JLabel();
@@ -323,6 +345,17 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLabel_ayuda_opciones_abajo = new javax.swing.JLabel();
         jLabel_ayuda_errores = new javax.swing.JLabel();
         jLabel_ayuda_restricciones_insertar = new javax.swing.JLabel();
+        jDialog_licencia = new javax.swing.JDialog();
+        jLabel54 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jLabel55 = new javax.swing.JLabel();
+        jDialog_about = new javax.swing.JDialog();
+        jLabel56 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        jLabel60 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxScope = new javax.swing.JComboBox();
@@ -350,6 +383,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem_iniciar = new javax.swing.JMenuItem();
         jMenuItem_quit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem_ayuda = new javax.swing.JMenuItem();
@@ -463,7 +497,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jDialog_restriccion_add.setMinimumSize(new java.awt.Dimension(380, 190));
         jDialog_restriccion_add.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         jDialog_restriccion_add.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog_restriccion_add.setPreferredSize(new java.awt.Dimension(307, 190));
         jDialog_restriccion_add.setResizable(false);
 
         jButton_restriccion_aceptar.setText("Añadir");
@@ -647,6 +680,13 @@ abstract public class MainWindow extends javax.swing.JFrame {
             }
         });
 
+        jFileChooser_matrix.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        jFileChooser_matrix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser_matrixActionPerformed(evt);
+            }
+        });
+
         jDialog_restriccion_edit.setMinimumSize(new java.awt.Dimension(380, 180));
         jDialog_restriccion_edit.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
         jDialog_restriccion_edit.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
@@ -741,7 +781,6 @@ abstract public class MainWindow extends javax.swing.JFrame {
         );
 
         jFrame_ayuda.setMinimumSize(new java.awt.Dimension(670, 405));
-        jFrame_ayuda.setPreferredSize(new java.awt.Dimension(670, 405));
         jFrame_ayuda.setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -789,23 +828,23 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jPanel_ayuda_urlLayout.setHorizontalGroup(
             jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addContainerGap()
                 .addGroup(jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
                         .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)))
+                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)))
             .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
-                .addGap(124, 124, 124)
+                .addGap(87, 87, 87)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel_ayuda_urlLayout.setVerticalGroup(
             jPanel_ayuda_urlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ayuda_urlLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -813,7 +852,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 65, Short.MAX_VALUE))
         );
@@ -1091,7 +1130,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLabel51.setText("memoria. Si esto le ha sucedido por favor entre en este link:");
 
         jTextField1.setEditable(false);
-        jTextField1.setText("jTextField1");
+        jTextField1.setText("http://es.wikihow.com/aumentar-la-memoria-Java-en-Windows-7");
+
+        jLabel52.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel52.setText("Este link lo hace desde la interfaz:");
+
+        jLabel53.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel53.setText("Este link lo soluciona desde la consola");
+
+        jTextField2.setEditable(false);
+        jTextField2.setText("http://bit.ly/1Guptbi");
 
         javax.swing.GroupLayout jPanel_ayuda_erroresLayout = new javax.swing.GroupLayout(jPanel_ayuda_errores);
         jPanel_ayuda_errores.setLayout(jPanel_ayuda_erroresLayout);
@@ -1109,11 +1157,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
                         .addGap(211, 211, 211)
                         .addComponent(jLabel46))
                     .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel_ayuda_erroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                            .addComponent(jLabel52)
+                            .addComponent(jLabel53)
+                            .addComponent(jTextField2)))
+                    .addGroup(jPanel_ayuda_erroresLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel_ayuda_erroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel50, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(jLabel50)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel_ayuda_erroresLayout.setVerticalGroup(
             jPanel_ayuda_erroresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1125,9 +1178,15 @@ abstract public class MainWindow extends javax.swing.JFrame {
                 .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
+                .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jLayeredPane_ayuda.add(jPanel_ayuda_errores);
@@ -1265,6 +1324,126 @@ abstract public class MainWindow extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jDialog_licencia.setMinimumSize(new java.awt.Dimension(557, 196));
+        jDialog_licencia.setModal(true);
+        jDialog_licencia.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        jDialog_licencia.setResizable(false);
+
+        jLabel54.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel54.setText("Licencia pmgc.");
+
+        jButton4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jButton4.setText("Aceptar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel55.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel55.setText("es decir, GRATUITA previo pago de 50 euros por cabeza.");
+
+        javax.swing.GroupLayout jDialog_licenciaLayout = new javax.swing.GroupLayout(jDialog_licencia.getContentPane());
+        jDialog_licencia.getContentPane().setLayout(jDialog_licenciaLayout);
+        jDialog_licenciaLayout.setHorizontalGroup(
+            jDialog_licenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_licenciaLayout.createSequentialGroup()
+                .addGroup(jDialog_licenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog_licenciaLayout.createSequentialGroup()
+                        .addGap(197, 197, 197)
+                        .addComponent(jLabel54))
+                    .addGroup(jDialog_licenciaLayout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(jLabel55))
+                    .addGroup(jDialog_licenciaLayout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(132, Short.MAX_VALUE))
+        );
+        jDialog_licenciaLayout.setVerticalGroup(
+            jDialog_licenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_licenciaLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel54)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel55)
+                .addGap(18, 18, 18)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+
+        jDialog_about.setMinimumSize(new java.awt.Dimension(557, 200));
+        jDialog_about.setModal(true);
+        jDialog_about.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        jDialog_about.setPreferredSize(new java.awt.Dimension(557, 200));
+        jDialog_about.setResizable(false);
+
+        jLabel56.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel56.setText("Aplicación creada por:");
+
+        jLabel57.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel57.setText("Pablo Molina");
+
+        jLabel58.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel58.setText("Email: pmg00015@red.ujaen.es");
+
+        jLabel59.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel59.setText("Email: gcm00014@red.ujaen.es");
+
+        jLabel60.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel60.setText("Gregorio Carazo");
+
+        jButton5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jButton5.setText("Aceptar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog_aboutLayout = new javax.swing.GroupLayout(jDialog_about.getContentPane());
+        jDialog_about.getContentPane().setLayout(jDialog_aboutLayout);
+        jDialog_aboutLayout.setHorizontalGroup(
+            jDialog_aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_aboutLayout.createSequentialGroup()
+                .addGroup(jDialog_aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDialog_aboutLayout.createSequentialGroup()
+                        .addGap(196, 196, 196)
+                        .addComponent(jLabel56))
+                    .addGroup(jDialog_aboutLayout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addGroup(jDialog_aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jDialog_aboutLayout.createSequentialGroup()
+                                .addComponent(jLabel60)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel59))
+                            .addGroup(jDialog_aboutLayout.createSequentialGroup()
+                                .addComponent(jLabel57)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel58))))
+                    .addGroup(jDialog_aboutLayout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(121, Short.MAX_VALUE))
+        );
+        jDialog_aboutLayout.setVerticalGroup(
+            jDialog_aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_aboutLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel56)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDialog_aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel57)
+                    .addComponent(jLabel58))
+                .addGap(18, 18, 18)
+                .addGroup(jDialog_aboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel60)
+                    .addComponent(jLabel59))
+                .addGap(18, 18, 18)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(440, 740));
         setResizable(false);
@@ -1356,6 +1535,11 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         buttonGenerateMatrix.setText("Examinar...");
         buttonGenerateMatrix.setEnabled(false);
+        buttonGenerateMatrix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGenerateMatrixActionPerformed(evt);
+            }
+        });
 
         buttonSaveInFolder.setText("Examinar...");
         buttonSaveInFolder.setEnabled(false);
@@ -1408,6 +1592,15 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
+        jMenuItem_iniciar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem_iniciar.setText("Iniciar rastreo");
+        jMenuItem_iniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_iniciarActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem_iniciar);
+
         jMenuItem_quit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem_quit.setText("Salir");
         jMenuItem_quit.addActionListener(new java.awt.event.ActionListener() {
@@ -1430,10 +1623,22 @@ abstract public class MainWindow extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem_ayuda);
 
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Licencia");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem5.setText("Acerca de");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuBar1.add(jMenu2);
@@ -1558,6 +1763,9 @@ abstract public class MainWindow extends javax.swing.JFrame {
 
     private void checkboxGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkboxGenerateMatrixActionPerformed
         this.buttonGenerateMatrix.setEnabled(this.checkboxGenerateMatrix.isSelected());
+        if (!this.checkboxGenerateMatrix.isSelected()) {
+            main.SAVE_MATRIX = null;
+        }
     }//GEN-LAST:event_checkboxGenerateMatrixActionPerformed
 
     private void buttonSaveInFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveInFolderActionPerformed
@@ -1822,6 +2030,60 @@ abstract public class MainWindow extends javax.swing.JFrame {
         jLayeredPane_ayuda.moveToFront(jPanel_ayuda_restricciones_insertar);
     }//GEN-LAST:event_jLabel_ayuda_restricciones_insertarMouseClicked
 
+    private void jFileChooser_matrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser_matrixActionPerformed
+        // TODO add your handling code here:
+        main.SAVE_MATRIX = this.jFileChooser_matrix.getSelectedFile();
+    }//GEN-LAST:event_jFileChooser_matrixActionPerformed
+
+    private void buttonGenerateMatrixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGenerateMatrixActionPerformed
+        // TODO add your handling code here:
+        this.jFileChooser_matrix.showDialog(this, null);
+    }//GEN-LAST:event_buttonGenerateMatrixActionPerformed
+
+    private void jMenuItem_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_iniciarActionPerformed
+        // TODO add your handling code here:
+        this.visitedLinks = 0;
+        this.skippedLinks = 0;
+        this.tooDeepLinks = 0;
+        this.errorLinks = 0;
+        this.jLabelVisitedLinks.setText("0");
+        this.jLabelSkippedLinks.setText("0");
+        this.jLabelTooDeepLinks.setText("0");
+        this.jLabelErrorLinks.setText("0");
+        this.buttonToggleCrawler.setVisible(true);
+        this.buttonStopCrawler.setText("Finalizar");
+        this.clearLog();
+        this.resetCrawler();
+        this.log("Configurando crawler");
+        this.setCrawlerOptions();
+        this.log("Lanzando crawler");
+        this.runCrawler(this.restricciones);
+        this.buttonToggleCrawler.setText("Pausar");
+        this.JDialog_Run.setLocationRelativeTo(this);
+        this.JDialog_Run.setModal(true);
+        this.JDialog_Run.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_iniciarActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        jDialog_licencia.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jDialog_licencia.setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        jDialog_about.setVisible(false);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        jDialog_about.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog JDialog_Run;
     private javax.swing.JButton buttonConcatenateResults;
@@ -1836,6 +2098,8 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton_addRestriction;
     private javax.swing.JButton jButton_deleteRestriction;
     private javax.swing.JButton jButton_editRestriction;
@@ -1855,11 +2119,14 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBoxScope;
     private javax.swing.JComboBox jComboBox_restriction_type;
     private javax.swing.JComboBox jComboBox_restrictionedit_type;
+    private javax.swing.JDialog jDialog_about;
     private javax.swing.JDialog jDialog_edit_url;
+    private javax.swing.JDialog jDialog_licencia;
     private javax.swing.JDialog jDialog_restriccion_add;
     private javax.swing.JDialog jDialog_restriccion_edit;
     private javax.swing.JFileChooser jFileChooser_file;
     private javax.swing.JFileChooser jFileChooser_folder;
+    private javax.swing.JFileChooser jFileChooser_matrix;
     private javax.swing.JFrame jFrame_ayuda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1908,7 +2175,16 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1930,6 +2206,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem_ayuda;
+    private javax.swing.JMenuItem jMenuItem_iniciar;
     private javax.swing.JMenuItem jMenuItem_menu_lista_aniadir;
     private javax.swing.JMenuItem jMenuItem_menu_lista_eliminar;
     private javax.swing.JMenuItem jMenuItem_menu_lista_modificar;
@@ -1950,6 +2227,7 @@ abstract public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTable jTable_tabla_restricciones;
     private javax.swing.JTextArea jTextAreaRun;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField_edit_url;
     private javax.swing.JTextField jTextField_restriction_value;
     private javax.swing.JTextField jTextField_restrictionedit_value;
